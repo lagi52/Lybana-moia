@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #24133d, #050505 60%);
+    color: white;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(white 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: moveStars 40s linear infinite;
+    opacity: 0.45;
+}
+
+@keyframes moveStars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-500px); }
+}
+
+.intro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    animation: appear 3s ease;
+}
+
+.small-text {
+    font-size: 18px;
+    color: #b7a6ff;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 70px;
+    font-weight: 300;
+    background: linear-gradient(90deg, #ffffff, #cba8ff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+p {
+    margin-top: 25px;
+    font-size: 22px;
+    color: #d0d0d0;
+}
+
+button {
+    margin-top: 50px;
+    padding: 18px 50px;
+    border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: 0.4s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.2);
+}
+
+.second-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    background: #050505;
+    transition: 2s;
+}
+
+.second-screen.show {
+    opacity: 1;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translate(-50%, -40%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@media(max-width:600px) {
+    h1 { font-size: 45px; }
+    p { font-size: 17px; }
+    button { padding: 15px 35px; }
+}
