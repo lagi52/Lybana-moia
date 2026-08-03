@@ -80,18 +80,14 @@ function showMessages(screenId, nextScreenId) {
     const messages = screen.querySelectorAll('.message-text');
     const continueBtn = screen.querySelector('.continue-btn');
 
-    // Показываем сообщения по очереди
     messages.forEach((msg, i) => {
         setTimeout(() => msg.classList.add('show'), i * 1000);
     });
 
-    // Показываем кнопку после последнего сообщения
     setTimeout(() => {
         continueBtn.style.display = 'inline-block';
-        continueBtn.style.animation = 'btnAppear 0.8s ease';
     }, messages.length * 1000 + 500);
 
-    // По нажатию — переход
     continueBtn.onclick = () => {
         hideScreen(screen);
         setTimeout(() => showScreen(document.getElementById(nextScreenId)), 1200);
