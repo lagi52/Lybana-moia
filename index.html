@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Для Любови ❤️</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,17 +22,24 @@
     </div>
 
     <!-- Пролог -->
-    <div class="intro" id="intro">
+    <div class="screen intro" id="intro">
         <div class="glass-panel">
             <div class="small-text">Для одного человека...</div>
             <h1>Для Любови</h1>
             <p>Этот маленький мир был создан только для тебя.</p>
-            <button id="start">Начать ✨</button>
+            <button id="start" class="main-btn">Начать ✨</button>
         </div>
     </div>
 
-    <!-- Вопрос 1: Какая ты сегодня? -->
-    <div class="question-screen" id="q1">
+    <!-- Фраза-мостик (скрыта) -->
+    <div class="screen bridge" id="bridge">
+        <div class="glass-panel">
+            <p class="bridge-text" id="bridgeText"></p>
+        </div>
+    </div>
+
+    <!-- Вопрос 1 -->
+    <div class="screen question-screen" id="q1">
         <div class="glass-panel">
             <h2>Какая ты сегодня?</h2>
             <p class="hint">Можно выбрать несколько</p>
@@ -48,8 +55,8 @@
         </div>
     </div>
 
-    <!-- Вопрос 2: Что делает тебя счастливее? -->
-    <div class="question-screen" id="q2">
+    <!-- Вопрос 2 -->
+    <div class="screen question-screen" id="q2">
         <div class="glass-panel">
             <h2>Что делает тебя счастливее?</h2>
             <p class="hint">Можно выбрать несколько</p>
@@ -65,8 +72,8 @@
         </div>
     </div>
 
-    <!-- Вопрос 3: Какая ты? (из твоих слов) -->
-    <div class="question-screen" id="q3">
+    <!-- Вопрос 3 -->
+    <div class="screen question-screen" id="q3">
         <div class="glass-panel">
             <h2>Какая ты?</h2>
             <p class="hint">Можно выбрать несколько</p>
@@ -82,8 +89,8 @@
         </div>
     </div>
 
-    <!-- Вопрос 4: Что тебе ближе? -->
-    <div class="question-screen" id="q4">
+    <!-- Вопрос 4 -->
+    <div class="screen question-screen" id="q4">
         <div class="glass-panel">
             <h2>Что тебе ближе?</h2>
             <p class="hint">Можно выбрать несколько</p>
@@ -99,8 +106,8 @@
         </div>
     </div>
 
-    <!-- Вопрос 5: Что делает тебя особенной? -->
-    <div class="question-screen" id="q5">
+    <!-- Вопрос 5 -->
+    <div class="screen question-screen" id="q5">
         <div class="glass-panel">
             <h2>Что делает тебя особенной?</h2>
             <p class="hint">Можно выбрать несколько</p>
@@ -116,22 +123,20 @@
         </div>
     </div>
 
-    <!-- Сбор ответов (перед финалом) -->
-    <div class="question-screen" id="summary">
+    <!-- Тихая исповедь -->
+    <div class="screen confession" id="confession">
         <div class="glass-panel">
-            <h2>Ты выбрала...</h2>
-            <div id="summaryAnswers"></div>
-            <p class="summary-text">Это всё — ты. Но это ещё не всё...</p>
-            <button id="toFinale">Узнать главное ❤️</button>
+            <div id="confessionLines"></div>
         </div>
     </div>
 
-    <!-- Финал (пока заглушка) -->
-    <div class="question-screen" id="finale">
-        <div class="glass-panel">
+    <!-- Финал со словами -->
+    <div class="screen finale" id="finale">
+        <div class="glass-panel" id="finalePanel">
             <h2>Ты у меня самая...</h2>
             <div id="finaleWords"></div>
-            <p class="finale-text">Спасибо, что ты есть, Люба. ❤️</p>
+            <p class="finale-text" id="finaleLove"></p>
+            <button class="main-btn" id="replayBtn">Сыграть ещё раз? 🌙</button>
         </div>
     </div>
 
