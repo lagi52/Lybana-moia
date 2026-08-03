@@ -9,7 +9,7 @@ body {
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
-    background: #050510;
+    background: #010108;
     color: white;
     font-family: "Segoe UI", "Helvetica Neue", sans-serif;
     -webkit-tap-highlight-color: transparent;
@@ -18,50 +18,68 @@ body {
     touch-action: manipulation;
 }
 
-/* КОСМОС */
-.stars {
+/* ============ ТУМАННОСТИ ============ */
+.nebula {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(1.5px 1.5px at 40px 60px, #fff, transparent),
-                      radial-gradient(1px 1px at 150px 300px, #fff, transparent),
-                      radial-gradient(1.5px 1.5px at 280px 100px, #fff, transparent),
-                      radial-gradient(1px 1px at 400px 450px, #fff, transparent),
-                      radial-gradient(1.5px 1.5px at 550px 200px, #fff, transparent),
-                      radial-gradient(1px 1px at 680px 400px, #fff, transparent),
-                      radial-gradient(1.5px 1.5px at 800px 150px, #fff, transparent),
-                      radial-gradient(1px 1px at 900px 500px, #fff, transparent);
-    background-size: 1000px 700px;
-    animation: moveStars 60s linear infinite;
-    opacity: 0.7;
     pointer-events: none;
+    z-index: 0;
 }
-.stars2 {
-    background-image: radial-gradient(1px 1px at 20px 80px, #cba8ff, transparent),
-                      radial-gradient(1px 1px at 180px 200px, #cba8ff, transparent),
-                      radial-gradient(1px 1px at 320px 400px, #cba8ff, transparent),
-                      radial-gradient(1px 1px at 500px 100px, #cba8ff, transparent);
-    background-size: 900px 600px;
-    animation: moveStars 80s linear infinite reverse;
-    opacity: 0.5;
+.nebula-1 {
+    background:
+        radial-gradient(ellipse at 25% 35%, rgba(120, 40, 200, 0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 20%, rgba(60, 20, 140, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 75%, rgba(40, 10, 100, 0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 80%, rgba(100, 30, 180, 0.18) 0%, transparent 50%);
+    animation: nebulaPulse 20s ease-in-out infinite;
 }
-.stars3 {
-    background-image: radial-gradient(1.5px 1.5px at 60px 400px, #fff, transparent),
-                      radial-gradient(1.5px 1.5px at 250px 100px, #fff, transparent),
-                      radial-gradient(1.5px 1.5px at 450px 550px, #fff, transparent);
-    background-size: 950px 650px;
-    animation: moveStars 100s linear infinite;
-    opacity: 0.3;
+.nebula-2 {
+    background:
+        radial-gradient(ellipse at 60% 50%, rgba(180, 100, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 30% 60%, rgba(80, 20, 160, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 10%, rgba(140, 60, 220, 0.15) 0%, transparent 55%);
+    animation: nebulaPulse 25s ease-in-out infinite reverse;
 }
-@keyframes moveStars {
-    from { transform: translateY(0); }
-    to { transform: translateY(-700px); }
+.nebula-3 {
+    background:
+        radial-gradient(ellipse at 40% 45%, rgba(200, 140, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 75% 40%, rgba(100, 30, 180, 0.13) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 25%, rgba(160, 80, 240, 0.1) 0%, transparent 45%);
+    animation: nebulaPulse 30s ease-in-out infinite;
+}
+@keyframes nebulaPulse {
+    0%, 100% { transform: scale(1) translate(0, 0); opacity: 1; }
+    25% { transform: scale(1.08) translate(-1%, 1%); opacity: 0.85; }
+    50% { transform: scale(1.05) translate(1%, -1%); opacity: 0.9; }
+    75% { transform: scale(1.1) translate(-0.5%, -0.5%); opacity: 0.8; }
 }
 
-/* ЛЕПЕСТКИ */
-.petals {
+/* ============ МЛЕЧНЫЙ ПУТЬ ============ */
+.milky-way {
+    position: fixed;
+    top: -30%;
+    left: -10%;
+    width: 150%;
+    height: 160%;
+    background:
+        radial-gradient(ellipse at 50% 50%, rgba(180, 140, 255, 0.06) 0%, transparent 30%),
+        radial-gradient(ellipse at 48% 52%, rgba(200, 160, 255, 0.04) 0%, transparent 25%),
+        radial-gradient(ellipse at 52% 48%, rgba(140, 100, 220, 0.05) 0%, transparent 28%);
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 0;
+    animation: milkyWayDrift 40s ease-in-out infinite;
+}
+@keyframes milkyWayDrift {
+    0%, 100% { transform: rotate(-15deg) translate(0, 0); }
+    50% { transform: rotate(-14deg) translate(1%, -1%); }
+}
+
+/* ============ ЗВЁЗДЫ (3 СЛОЯ) ============ */
+.stars-layer {
     position: fixed;
     top: 0;
     left: 0;
@@ -69,6 +87,157 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 1;
+}
+/* Крупные яркие звёзды */
+.stars-far {
+    background-image:
+        radial-gradient(2.5px 2.5px at 50px 80px, #ffffff, transparent),
+        radial-gradient(2px 2px at 180px 250px, #f8f0ff, transparent),
+        radial-gradient(3px 3px at 320px 120px, #ffffff, transparent),
+        radial-gradient(2px 2px at 450px 380px, #e8d8ff, transparent),
+        radial-gradient(2.5px 2.5px at 580px 160px, #ffffff, transparent),
+        radial-gradient(3.5px 3.5px at 700px 420px, #f0e0ff, transparent),
+        radial-gradient(2px 2px at 820px 90px, #ffffff, transparent),
+        radial-gradient(2.5px 2.5px at 920px 350px, #dcc8ff, transparent),
+        radial-gradient(3px 3px at 80px 480px, #ffffff, transparent),
+        radial-gradient(2px 2px at 280px 550px, #f4e8ff, transparent),
+        radial-gradient(3.5px 3.5px at 500px 500px, #ffffff, transparent),
+        radial-gradient(2.5px 2.5px at 650px 580px, #e0d0ff, transparent),
+        radial-gradient(2px 2px at 880px 520px, #ffffff, transparent);
+    background-size: 1000px 700px;
+    animation: starsDrift 120s linear infinite;
+    opacity: 0.9;
+}
+/* Средние звёзды */
+.stars-mid {
+    background-image:
+        radial-gradient(1.5px 1.5px at 30px 150px, #d4c0ff, transparent),
+        radial-gradient(1px 1px at 150px 50px, #ffffff, transparent),
+        radial-gradient(2px 2px at 250px 300px, #e0d0ff, transparent),
+        radial-gradient(1.5px 1.5px at 380px 80px, #ffffff, transparent),
+        radial-gradient(1px 1px at 480px 280px, #f0e4ff, transparent),
+        radial-gradient(2px 2px at 550px 450px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 680px 200px, #c8b0f0, transparent),
+        radial-gradient(1px 1px at 780px 400px, #ffffff, transparent),
+        radial-gradient(2px 2px at 880px 150px, #e8d8ff, transparent),
+        radial-gradient(1.5px 1.5px at 100px 400px, #ffffff, transparent),
+        radial-gradient(1px 1px at 350px 500px, #dcc8ff, transparent),
+        radial-gradient(2px 2px at 600px 350px, #ffffff, transparent),
+        radial-gradient(1.5px 1.5px at 750px 550px, #f0e0ff, transparent),
+        radial-gradient(1px 1px at 950px 480px, #ffffff, transparent);
+    background-size: 950px 650px;
+    animation: starsDrift 150s linear infinite reverse;
+    opacity: 0.65;
+}
+/* Мелкие звёзды (густая пыль) */
+.stars-near {
+    background-image:
+        radial-gradient(1px 1px at 20px 40px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 80px 180px, #f8f0ff, transparent),
+        radial-gradient(1px 1px at 160px 90px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 220px 320px, #e8d8ff, transparent),
+        radial-gradient(1px 1px at 310px 160px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 400px 400px, #f0e4ff, transparent),
+        radial-gradient(1px 1px at 490px 220px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 560px 500px, #dcc8ff, transparent),
+        radial-gradient(1px 1px at 630px 130px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 720px 380px, #f4e8ff, transparent),
+        radial-gradient(1px 1px at 810px 280px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 890px 450px, #e0d0ff, transparent),
+        radial-gradient(1px 1px at 40px 520px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 180px 580px, #f8f0ff, transparent),
+        radial-gradient(1px 1px at 300px 480px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 440px 600px, #d4c0ff, transparent),
+        radial-gradient(1px 1px at 580px 420px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 700px 580px, #e8d8ff, transparent),
+        radial-gradient(1px 1px at 840px 350px, #ffffff, transparent),
+        radial-gradient(0.8px 0.8px at 960px 520px, #f0e0ff, transparent);
+    background-size: 1000px 700px;
+    animation: starsDrift 180s linear infinite;
+    opacity: 0.5;
+}
+@keyframes starsDrift {
+    from { transform: translateY(0); }
+    to { transform: translateY(-700px); }
+}
+
+/* ============ МЕРЦАНИЕ ЗВЁЗД ============ */
+.twinkle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+.twinkle::before,
+.twinkle::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: white;
+    animation: twinkleStar 3s ease-in-out infinite;
+}
+.twinkle::before { top: 15%; left: 20%; animation-delay: 0s; }
+.twinkle::after { top: 60%; left: 75%; animation-delay: 1.5s; }
+@keyframes twinkleStar {
+    0%, 100% { opacity: 0.2; transform: scale(1); box-shadow: 0 0 4px rgba(255,255,255,0.3); }
+    50% { opacity: 1; transform: scale(1.8); box-shadow: 0 0 12px rgba(200,160,255,0.8); }
+}
+
+/* ============ ПАДАЮЩАЯ КОМЕТА ============ */
+.comet {
+    position: fixed;
+    top: -5%;
+    left: 90%;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 2px rgba(200, 180, 255, 0.8), 0 0 40px 8px rgba(150, 100, 220, 0.3);
+    pointer-events: none;
+    z-index: 2;
+    animation: cometFall 14s linear infinite;
+    opacity: 0;
+}
+.comet::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 120px;
+    height: 1.5px;
+    background: linear-gradient(to left, rgba(200,180,255,0.9), rgba(150,100,220,0.3), transparent);
+    transform: translateY(-50%);
+    border-radius: 2px;
+}
+.comet-2 {
+    top: 20%;
+    left: 95%;
+    animation-delay: 7s;
+    animation-duration: 16s;
+    width: 2px;
+    height: 2px;
+}
+@keyframes cometFall {
+    0% { transform: translate(0, 0); opacity: 0; }
+    5% { opacity: 1; }
+    15% { opacity: 0; }
+    100% { transform: translate(-900px, 800px); opacity: 0; }
+}
+
+/* ============ ЛЕПЕСТКИ ============ */
+.petals {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
 }
 .petal {
     position: absolute;
@@ -85,7 +254,7 @@ body {
     100% { transform: translateY(110vh) rotate(720deg) scale(0.3); opacity: 0; }
 }
 
-/* МУЗЫКА */
+/* ============ МУЗЫКА ============ */
 .music-toggle {
     position: fixed;
     top: 16px;
@@ -94,9 +263,9 @@ body {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,7 +278,7 @@ body {
 }
 .music-icon { font-size: 18px; }
 
-/* ЭКРАНЫ */
+/* ============ ЭКРАНЫ ============ */
 .screen {
     position: fixed;
     top: 0;
@@ -125,21 +294,18 @@ body {
     transition: opacity 0.8s ease;
     padding: 20px;
 }
-.screen.active {
-    opacity: 1;
-    pointer-events: all;
-}
+.screen.active { opacity: 1; pointer-events: all; }
 
-/* СТЕКЛЯННАЯ ПАНЕЛЬ */
+/* ============ СТЕКЛЯННАЯ ПАНЕЛЬ ============ */
 .glass-panel {
-    background: rgba(15, 8, 30, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(12, 6, 28, 0.5);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
     padding: 30px 24px;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 50px rgba(100, 40, 180, 0.12), inset 0 1px 0 rgba(255,255,255,0.04);
     width: 100%;
     max-width: 500px;
     max-height: 85vh;
@@ -148,21 +314,21 @@ body {
     z-index: 2;
 }
 
-/* ТИПОГРАФИКА */
+/* ============ ТИПОГРАФИКА ============ */
 .small-text { font-size: 13px; color: #b7a6ff; letter-spacing: 4px; margin-bottom: 18px; text-transform: uppercase; }
 h1 { font-size: 42px; font-weight: 300; background: linear-gradient(135deg, #ffffff 0%, #d4b8ff 50%, #b57bee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 14px; line-height: 1.2; }
 h2 { font-size: 22px; font-weight: 300; margin-bottom: 6px; background: linear-gradient(135deg, #ffffff, #d4b8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.3; }
 .glass-panel p { font-size: 15px; color: #b0b0c0; margin-bottom: 5px; line-height: 1.5; }
 .hint { font-size: 12px !important; color: #7777aa !important; margin-bottom: 18px !important; }
 
-/* КНОПКИ */
+/* ============ КНОПКИ ============ */
 .glow-btn {
-    padding: 14px 40px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.08); color: white; font-size: 17px;
+    padding: 14px 40px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.06); color: white; font-size: 17px;
     cursor: pointer; backdrop-filter: blur(10px); margin-top: 20px;
     transition: 0.3s; letter-spacing: 1px; position: relative; z-index: 5;
 }
-.glow-btn:hover { box-shadow: 0 0 25px rgba(160, 100, 255, 0.4); border-color: rgba(200, 160, 255, 0.6); background: rgba(255, 255, 255, 0.14); }
+.glow-btn:hover { box-shadow: 0 0 30px rgba(160, 100, 255, 0.45); border-color: rgba(200, 160, 255, 0.6); background: rgba(255, 255, 255, 0.12); transform: translateY(-1px); }
 .glow-btn:active { transform: scale(0.96); }
 
 .next-btn {
@@ -173,7 +339,7 @@ h2 { font-size: 22px; font-weight: 300; margin-bottom: 6px; background: linear-g
 }
 .next-btn.active { opacity: 1; pointer-events: all; border-color: rgba(200, 160, 255, 0.6); box-shadow: 0 0 18px rgba(160, 100, 255, 0.2); }
 
-/* ОПЦИИ */
+/* ============ ОПЦИИ ============ */
 .options { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin-bottom: 6px; }
 .option-btn {
     padding: 10px 18px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.18);
@@ -184,26 +350,32 @@ h2 { font-size: 22px; font-weight: 300; margin-bottom: 6px; background: linear-g
 .option-btn:active { transform: scale(0.93); }
 .option-btn.selected { background: rgba(180, 130, 255, 0.3); border-color: rgba(200, 160, 255, 0.7); box-shadow: 0 0 16px rgba(160, 100, 255, 0.3); color: #fff; }
 
-/* СООБЩЕНИЯ */
+/* ============ СООБЩЕНИЯ ============ */
 .message-text { font-size: 16px !important; color: #c8c0e0 !important; opacity: 0; transform: translateY(10px); transition: all 1.5s ease; line-height: 1.7 !important; margin-bottom: 10px !important; }
 .message-text.show { opacity: 1; transform: translateY(0); }
 
-/* ИСПОВЕДЬ */
+/* ============ СТРЕЛКА ============ */
+.arrow-wrapper { text-align: right; margin-top: 12px; }
+.continue-arrow { display: inline-block; font-size: 26px; color: rgba(255,255,255,0.5); cursor: pointer; animation: arrowPulse 2s ease-in-out infinite; transition: color 0.3s; }
+.continue-arrow:hover { color: rgba(200,160,255,0.9); }
+@keyframes arrowPulse { 0%,100% { opacity:0.4; text-shadow:0 0 4px rgba(180,130,255,0.2); } 50% { opacity:1; text-shadow:0 0 12px rgba(180,130,255,0.6); } }
+
+/* ============ ИСПОВЕДЬ ============ */
 .confession-line { font-size: 17px; color: #c0b8e0; margin: 10px 0; opacity: 0; transition: opacity 1.8s ease; line-height: 1.6; }
 .confession-line.show { opacity: 1; }
 
-/* ФИНАЛ */
+/* ============ ФИНАЛ ============ */
 .finale-art-container { position: relative; width: 100%; max-width: 550px; max-height: 85vh; border-radius: 24px; overflow: hidden; }
 .finale-art { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 24px; }
-.finale-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.2); display: flex; justify-content: center; align-items: center; padding: 18px; border-radius: 24px; }
-.finale-glass, .secret-glass { background: rgba(8, 3, 20, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1); max-height: 100%; overflow-y: auto; }
+.finale-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.18); display: flex; justify-content: center; align-items: center; padding: 18px; border-radius: 24px; }
+.finale-glass, .secret-glass { background: rgba(8, 3, 20, 0.38); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); max-height: 100%; overflow-y: auto; }
 #finaleWords { margin: 14px 0; font-size: 13px; line-height: 1.9; color: #d0c0f0; text-align: center; }
 #finaleWords span { display: inline-block; margin: 1px 4px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
 #finaleWords span.show { opacity: 1; transform: translateY(0); }
 .finale-text { font-size: 15px !important; color: #c0c0d0 !important; margin-top: 14px !important; opacity: 0; transition: opacity 2s ease; }
 .finale-text.show { opacity: 1; }
 
-/* СЕКРЕТНАЯ РОЗА */
+/* ============ СЕКРЕТНАЯ РОЗА ============ */
 .secret-rose-container { margin-top: 24px; display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0; transition: opacity 2s ease; z-index: 5; }
 .secret-rose-container.show { opacity: 1; }
 .secret-rose { font-size: 38px; cursor: pointer; animation: rosePulse 2.5s ease-in-out infinite; transition: transform 0.3s ease; display: inline-block; z-index: 5; }
@@ -212,53 +384,23 @@ h2 { font-size: 22px; font-weight: 300; margin-bottom: 6px; background: linear-g
 .secret-hint { font-size: 12px !important; color: #9999bb !important; font-style: italic; animation: hintFade 3s ease-in-out infinite; }
 @keyframes hintFade { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-/* СОЗВЕЗДИЕ */
-#constellationScreen {
-    background: radial-gradient(ellipse at center, #0a0a1a 0%, #020208 100%);
-}
-#constellationStars {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    max-width: 600px;
-    max-height: 80vh;
-}
-.constellation-star {
-    position: absolute;
-    cursor: pointer;
-    font-size: 28px;
-    animation: starFloat 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 8px rgba(255,255,200,0.6));
-    transition: transform 0.3s ease, filter 0.3s ease;
-    z-index: 2;
-    user-select: none;
-}
-.constellation-star:hover {
-    transform: scale(1.3);
-    filter: drop-shadow(0 0 18px rgba(255,215,0,0.9));
-}
+/* ============ СОЗВЕЗДИЕ ============ */
+#constellationScreen { background: radial-gradient(ellipse at center, #0a0a1a 0%, #020208 100%); }
+#constellationStars { position: relative; width: 100%; height: 100%; max-width: 600px; max-height: 80vh; }
+.constellation-star { position: absolute; cursor: pointer; font-size: 28px; animation: starFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(255,255,200,0.6)); transition: transform 0.3s ease, filter 0.3s ease; z-index: 2; user-select: none; }
+.constellation-star:hover { transform: scale(1.3); filter: drop-shadow(0 0 18px rgba(255,215,0,0.9)); }
 @keyframes starFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-/* КАРТОЧКА ПОЖЕЛАНИЯ */
-.wish-card-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.75);
-    z-index: 200;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
+/* ============ КАРТОЧКА ПОЖЕЛАНИЯ ============ */
+.wish-card-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 200; display: flex; justify-content: center; align-items: center; padding: 20px; }
 @keyframes cardAppear { from { opacity:0; transform:scale(0.8); } to { opacity:1; transform:scale(1); } }
 
-/* СКРОЛЛ */
+/* ============ СКРОЛЛ ============ */
 .glass-panel::-webkit-scrollbar { width: 3px; }
 .glass-panel::-webkit-scrollbar-track { background: transparent; }
 .glass-panel::-webkit-scrollbar-thumb { background: rgba(180, 130, 255, 0.3); border-radius: 10px; }
 
-/* МОБИЛЬНАЯ */
+/* ============ МОБИЛЬНАЯ ============ */
 @media (max-width: 600px) {
     .glass-panel { padding: 24px 16px; border-radius: 18px; }
     h1 { font-size: 32px; }
