@@ -1,43 +1,100 @@
-// ============ ЛЕПЕСТКИ ============
+// ============ ПАРАЛЛАКС ============
 (function(){
-    var c = document.getElementById('petals');
-    var e = ['🌹','🥀','💜','🖤','✨','💫'];
-    function p(){
-        var d = document.createElement('div');
-        d.className = 'petal';
-        d.textContent = e[Math.floor(Math.random()*e.length)];
-        d.style.left = Math.random()*100+'%';
-        d.style.fontSize = (Math.random()*16+14)+'px';
-        d.style.animationDuration = (Math.random()*8+8)+'s';
-        c.appendChild(d);
-        setTimeout(function(){ d.remove(); }, 16000);
+    var layers = document.querySelectorAll('[data-parallax]');
+    var mouseX = 0, mouseY = 0;
+    var targetX = 0, targetY = 0;
+
+    document.addEventListener('mousemove', function(e){
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    // Для телефонов
+    window.addEventListener('deviceorientation', function(e){
+        if(e.gamma && e.beta){
+            mouseX = Math.max(-1, Math.min(1, e.gamma / 30));
+            mouseY = Math.max(-1, Math.min(1, e.beta / 30));
+        }
+    }, true);
+
+    function animate(){
+        targetX += (mouseX - targetX) * 0.04;
+        targetY += (mouseY - targetY) * 0.04;
+
+        layers.forEach(function(layer){
+            var speed = parseFloat(layer.getAttribute('data-parallax'));
+            var moveX = targetX * speed * 40;
+            var moveY = targetY * speed * 40;
+            layer.style.transform = 'translate('+moveX+'px, '+moveY+'px)';
+        });
+
+        requestAnimationFrame(animate);
     }
-    setInterval(p, 900);
-    for(var i=0;i<5;i++) setTimeout(p, i*500);
+    animate();
 })();
 
-// ============ МУЗЫКА ============
+// ============ СВЕТЯЩИЕСЯ ЧАСТИЦЫ ============
 (function(){
-    var btn = document.getElementById('musicToggle');
-    var audio = document.getElementById('bgMusic');
+    var container = document.getElementById('particles');
+    function createParticle(){
+        var p = document.createElement('div');
+        p.className = 'particle';
+        var size = Math.random() * 4 + 2;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = '105%';
+        p.style.background = 'rgba('+(180+Math.random()*75)+','+(100+Math.random()*80)+','+(220+Math.random()*35)+','+(0.6+Math.random()*0.4)+')';
+        p.style.animationDuration = (Math.random() * 12 + 10) + 's';
+        container.appendChild(p);
+        setTimeout(function(){ p.remove(); }, 22000);
+    }
+    setInterval(createParticle, 600);
+    for(var i=0; i<8; i++) setTimeout(createParticle, i*300);
+})();
+
+// ============ ЭМБИЕНТ ============
+(function(){
+    var btn = document.getElementById('ambientToggle');
+    var audio = document.getElementById('ambientSound');
+    audio.volume = 0.15;
     var playing = false;
     btn.addEventListener('click', function(){
-        if(playing){ audio.pause(); btn.classList.remove('playing'); btn.querySelector('.music-icon').textContent='🎵'; }
-        else { audio.play().catch(function(){}); btn.classList.add('playing'); btn.querySelector('.music-icon').textContent='🎶'; }
+        if(playing){
+            audio.pause();
+            btn.classList.remove('playing');
+            btn.querySelector('.ambient-icon').textContent = '🔇';
+        } else {
+            audio.play().catch(function(){});
+            btn.classList.add('playing');
+            btn.querySelector('.ambient-icon').textContent = '🎵';
+        }
         playing = !playing;
     });
 })();
+
+// ============ ДИАФРАГМА ============
+function irisTransition(callback){
+    var iris = document.getElementById('irisTransition');
+    iris.classList.add('active');
+    setTimeout(function(){
+        callback();
+        setTimeout(function(){
+            iris.classList.remove('active');
+        }, 200);
+    }, 800);
+}
 
 // ============ ЭКРАНЫ ============
 function showScreen(id){
     var s = document.getElementById(id);
     s.style.display = 'flex';
-    setTimeout(function(){ s.classList.add('active'); }, 30);
+    setTimeout(function(){ s.classList.add('active'); }, 50);
 }
 function hideScreen(id){
     var s = document.getElementById(id);
     s.classList.remove('active');
-    setTimeout(function(){ s.style.display = 'none'; }, 800);
+    setTimeout(function(){ s.style.display = 'none'; }, 600);
 }
 
 // ============ ВЫБОР ОТВЕТОВ ============
@@ -61,68 +118,46 @@ document.querySelectorAll('.options').forEach(function(opt){
     });
 });
 
-// ============ СООБЩЕНИЯ (СТРЕЛКА →) ============
+// ============ СООБЩЕНИЯ ============
 function showMessages(msgId, nextId){
     var screen = document.getElementById(msgId);
     showScreen(msgId);
-    var panel = screen.querySelector('.glass-panel');
     var msgs = screen.querySelectorAll('.message-text');
-
-    // Скрываем старую кнопку
-    var oldBtn = panel.querySelector('.continue-btn');
-    if(oldBtn) oldBtn.style.display = 'none';
-
-    // Удаляем старую стрелку
-    var oldArrow = panel.querySelector('.arrow-wrapper');
-    if(oldArrow) oldArrow.remove();
-
-    // Создаём стрелку
-    var arrowWrap = document.createElement('div');
-    arrowWrap.className = 'arrow-wrapper';
-    arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
-    var arrow = document.createElement('span');
-    arrow.className = 'continue-arrow';
-    arrow.innerHTML = '→';
-    arrow.style.cssText = 'display:none;';
-    arrowWrap.appendChild(arrow);
-    panel.appendChild(arrowWrap);
-
-    if(!document.getElementById('arrowStyle')){
-        var style = document.createElement('style');
-        style.id = 'arrowStyle';
-        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
-        document.head.appendChild(style);
-    }
-
+    var btn = screen.querySelector('.continue-btn');
+    if(btn) btn.style.display = 'none';
     msgs.forEach(function(m, i){
-        setTimeout(function(){ m.classList.add('show'); }, i * 2000);
+        setTimeout(function(){ m.classList.add('show'); }, i * 2200);
     });
-
-    var total = msgs.length * 2000 + 2000;
+    var total = msgs.length * 2200 + 2200;
     setTimeout(function(){
-        arrow.style.display = 'inline-block';
-        arrow.onclick = function(){
-            hideScreen(msgId);
-            setTimeout(function(){ showScreen(nextId); }, 800);
-        };
+        if(btn){
+            btn.style.display = 'inline-block';
+            btn.onclick = function(){
+                irisTransition(function(){
+                    hideScreen(msgId);
+                    setTimeout(function(){ showScreen(nextId); }, 600);
+                });
+            };
+        }
     }, total);
 }
 
-// ============ СТАРТ ============
+// ============ НАВИГАЦИЯ ============
 document.getElementById('startBtn').addEventListener('click', function(){
-    hideScreen('intro');
-    setTimeout(function(){ showScreen('q1'); }, 800);
+    irisTransition(function(){
+        hideScreen('intro');
+        setTimeout(function(){ showScreen('q1'); }, 600);
+    });
 });
 
-// ============ НАВИГАЦИЯ ============
-document.getElementById('next1').addEventListener('click', function(){ hideScreen('q1'); setTimeout(function(){ showMessages('msg1','q2'); }, 800); });
-document.getElementById('next2').addEventListener('click', function(){ hideScreen('q2'); setTimeout(function(){ showMessages('msg2','q3'); }, 800); });
-document.getElementById('next3').addEventListener('click', function(){ hideScreen('q3'); setTimeout(function(){ showMessages('msg3','q4'); }, 800); });
-document.getElementById('next4').addEventListener('click', function(){ hideScreen('q4'); setTimeout(function(){ showMessages('msg4','q5'); }, 800); });
-document.getElementById('next5').addEventListener('click', function(){ hideScreen('q5'); setTimeout(function(){ showScreen('q6'); }, 800); });
-document.getElementById('next6').addEventListener('click', function(){ hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 800); });
+document.getElementById('next1').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q1'); setTimeout(function(){ showMessages('msg1','q2'); }, 600); }); });
+document.getElementById('next2').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q2'); setTimeout(function(){ showMessages('msg2','q3'); }, 600); }); });
+document.getElementById('next3').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q3'); setTimeout(function(){ showMessages('msg3','q4'); }, 600); }); });
+document.getElementById('next4').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q4'); setTimeout(function(){ showMessages('msg4','q5'); }, 600); }); });
+document.getElementById('next5').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q5'); setTimeout(function(){ showScreen('q6'); }, 600); }); });
+document.getElementById('next6').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 600); }); });
 
-// ============ ИСПОВЕДЬ (СТРЕЛКА →) ============
+// ============ ИСПОВЕДЬ ============
 function startConfession(){
     var lines = [
         'Я мог бы просто сказать, что люблю тебя...',
@@ -132,50 +167,25 @@ function startConfession(){
         'И вот что у неё получилось...'
     ];
     var container = document.getElementById('confessionLines');
+    var btn = document.getElementById('confessionCont');
     container.innerHTML = '';
-    var panel = document.getElementById('confession').querySelector('.glass-panel');
-
-    // Скрываем старую кнопку
-    var oldBtn = document.getElementById('confessionCont');
-    if(oldBtn) oldBtn.style.display = 'none';
-
-    // Удаляем старую стрелку
-    var oldArrow = panel.querySelector('.arrow-wrapper');
-    if(oldArrow) oldArrow.remove();
-
-    // Создаём стрелку
-    var arrowWrap = document.createElement('div');
-    arrowWrap.className = 'arrow-wrapper';
-    arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
-    var arrow = document.createElement('span');
-    arrow.className = 'continue-arrow';
-    arrow.innerHTML = '→';
-    arrow.style.cssText = 'display:none;';
-    arrowWrap.appendChild(arrow);
-    panel.appendChild(arrowWrap);
-
-    if(!document.getElementById('arrowStyle')){
-        var style = document.createElement('style');
-        style.id = 'arrowStyle';
-        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
-        document.head.appendChild(style);
-    }
-
+    btn.style.display = 'none';
     lines.forEach(function(line, i){
         var p = document.createElement('p');
         p.className = 'confession-line';
         p.textContent = line;
         container.appendChild(p);
-        setTimeout(function(){ p.classList.add('show'); }, i * 2200);
+        setTimeout(function(){ p.classList.add('show'); }, i * 2400);
     });
-
     setTimeout(function(){
-        arrow.style.display = 'inline-block';
-        arrow.onclick = function(){
-            hideScreen('confession');
-            setTimeout(function(){ showFinale(); }, 800);
+        btn.style.display = 'inline-block';
+        btn.onclick = function(){
+            irisTransition(function(){
+                hideScreen('confession');
+                setTimeout(function(){ showFinale(); }, 600);
+            });
         };
-    }, lines.length * 2200 + 2000);
+    }, lines.length * 2400 + 2200);
 }
 
 // ============ ФИНАЛ ============
@@ -196,36 +206,40 @@ function showFinale(){
         var span = document.createElement('span');
         span.textContent = w;
         container.appendChild(span);
-        setTimeout(function(){ span.classList.add('show'); }, i * 100);
+        setTimeout(function(){ span.classList.add('show'); }, i * 110);
     });
     showScreen('finale');
     setTimeout(function(){
         var t = document.getElementById('finaleLove');
         t.innerHTML = 'Ты изменила меня. Спасибо тебе, что ты есть —<br>тихая, хорошая, тёплая, настоящая.<br><br>Люблю тебя. И буду любить, пока ты позволяешь...<br>и даже дольше. ❤️';
         t.classList.add('show');
-    }, words.length*100+800);
+    }, words.length*110+900);
     setTimeout(function(){
         document.querySelector('.secret-rose-container').classList.add('show');
-    }, words.length*100+2500);
+    }, words.length*110+2800);
 }
 
-// ============ СЕКРЕТНАЯ РОЗА ============
+// ============ СЕКРЕТНАЯ РОЗА И СОЗВЕЗДИЕ ============
 document.getElementById('secretRose').addEventListener('click', function(){
-    hideScreen('finale');
-    setTimeout(function(){
-        var sec = document.getElementById('secretMessage');
-        showScreen('secretMessage');
-        sec.querySelectorAll('.message-text').forEach(function(m, i){
-            setTimeout(function(){ m.classList.add('show'); }, i * 1200);
-        });
-    }, 800);
+    irisTransition(function(){
+        hideScreen('finale');
+        setTimeout(function(){
+            var sec = document.getElementById('secretMessage');
+            showScreen('secretMessage');
+            sec.querySelectorAll('.message-text').forEach(function(m, i){
+                setTimeout(function(){ m.classList.add('show'); }, i * 1400);
+            });
+        }, 600);
+    });
 });
 document.getElementById('backFromSecret').addEventListener('click', function(){
-    hideScreen('secretMessage');
-    setTimeout(function(){ showScreen('finale'); }, 800);
+    irisTransition(function(){
+        hideScreen('secretMessage');
+        setTimeout(function(){ showFinale(); }, 600);
+    });
 });
 
-// ============ СОЗВЕЗДИЕ ============
+// СОЗВЕЗДИЕ
 var constellationWishes = [
     'Пусть даже в самый тяжёлый день ты никогда не забываешь, насколько ты дорога.',
     'Я хочу, чтобы ты чаще улыбалась. Потому что твоя улыбка делает мир теплее.',
@@ -238,21 +252,22 @@ var constellationWishes = [
     'Спасибо тебе просто за то, что ты есть.',
     'И если бы мне снова пришлось выбирать — я бы всё равно выбрал именно тебя.'
 ];
-
 document.getElementById('toConstellation').addEventListener('click', function(){
-    hideScreen('secretMessage');
-    setTimeout(function(){ buildConstellation(); }, 800);
+    irisTransition(function(){
+        hideScreen('secretMessage');
+        setTimeout(function(){ buildConstellation(); }, 600);
+    });
 });
-
 document.getElementById('backFromConstellation').addEventListener('click', function(){
-    hideScreen('constellationScreen');
-    setTimeout(function(){ showScreen('secretMessage'); }, 800);
+    irisTransition(function(){
+        hideScreen('constellationScreen');
+        setTimeout(function(){ showScreen('secretMessage'); }, 600);
+    });
 });
 
 function buildConstellation(){
     var container = document.getElementById('constellationStars');
     container.innerHTML = '';
-
     var positions = [
         {top:'10%', left:'15%'}, {top:'8%', left:'75%'},
         {top:'28%', left:'8%'}, {top:'22%', left:'82%'},
@@ -260,7 +275,6 @@ function buildConstellation(){
         {top:'60%', left:'12%'}, {top:'55%', left:'85%'},
         {top:'75%', left:'25%'}, {top:'70%', left:'70%'}
     ];
-
     positions.forEach(function(pos, i){
         var star = document.createElement('div');
         star.className = 'constellation-star';
@@ -268,14 +282,9 @@ function buildConstellation(){
         star.style.top = pos.top;
         star.style.left = pos.left;
         star.style.animationDelay = (i*0.3)+'s';
-        star.addEventListener('click', function(e){
-            e.stopPropagation();
-            showWishCard(i, star);
-        });
+        star.addEventListener('click', function(e){ e.stopPropagation(); showWishCard(i, star); });
         container.appendChild(star);
     });
-
-    // Полярная звезда
     var polar = document.createElement('div');
     polar.className = 'constellation-star';
     polar.innerHTML = '🌟';
@@ -283,48 +292,39 @@ function buildConstellation(){
     polar.style.left = '42%';
     polar.style.fontSize = '44px';
     polar.style.filter = 'drop-shadow(0 0 18px rgba(255,215,0,0.9))';
-    polar.addEventListener('click', function(e){
-        e.stopPropagation();
-        showWishCard('polar', polar);
-    });
+    polar.addEventListener('click', function(e){ e.stopPropagation(); showWishCard('polar', polar); });
     container.appendChild(polar);
-
     showScreen('constellationScreen');
 }
 
 function showWishCard(index, starEl){
     var oldCard = document.querySelector('.wish-card-overlay');
     if(oldCard) oldCard.remove();
-
     var overlay = document.createElement('div');
     overlay.className = 'wish-card-overlay';
-
     var card = document.createElement('div');
     card.className = 'glass-panel';
     card.style.cssText = 'max-width:450px; animation:cardAppear 0.5s ease; text-align:center;';
-
     if(index === 'polar'){
-        card.innerHTML = '<p style="font-size:17px; color:#e0d0f0; line-height:1.7;">Пока существует хотя бы одна звезда во Вселенной...<br><br>я буду любить и желать тебе счастья.<br><br>❤️</p>';
+        card.innerHTML = '<p style="font-size:18px; color:#e0d0f0; line-height:1.7;">Пока существует хотя бы одна звезда во Вселенной...<br><br>я буду любить и желать тебе счастья.<br><br>❤️</p>';
     } else {
-        card.innerHTML = '<p style="font-size:17px; color:#e0d0f0; line-height:1.7;">'+constellationWishes[index]+'</p>';
+        card.innerHTML = '<p style="font-size:18px; color:#e0d0f0; line-height:1.7;">'+constellationWishes[index]+'</p>';
     }
-
     var closeBtn = document.createElement('button');
     closeBtn.className = 'glow-btn';
     closeBtn.textContent = 'Закрыть';
     closeBtn.addEventListener('click', function(){ overlay.remove(); });
     card.appendChild(closeBtn);
-
     overlay.appendChild(card);
     document.body.appendChild(overlay);
-
-    overlay.addEventListener('click', function(e){
-        if(e.target === overlay) overlay.remove();
-    });
-
-    // Золотим звезду
+    overlay.addEventListener('click', function(e){ if(e.target === overlay) overlay.remove(); });
     if(starEl && index !== 'polar'){
         starEl.innerHTML = '🌟';
         starEl.style.filter = 'drop-shadow(0 0 12px rgba(255,215,0,0.9))';
     }
 }
+
+// ============ ПОРТАЛ 18+ ============
+document.getElementById('portal18').addEventListener('click', function(){
+    window.location.href = 'adult.html';
+});
