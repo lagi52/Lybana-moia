@@ -13,96 +13,25 @@
             overflow:hidden;
             font-family:"Raleway",sans-serif;
             font-weight:300;
-            background:#0a0a12;
+            background:#020208;
             color:white;
             -webkit-tap-highlight-color:transparent;
             user-select:none;
             -webkit-user-select:none;
         }
 
-        /* ===== ФОН: НОЧНАЯ ЯПОНИЯ ===== */
-        .japan-bg {
+        /* Фон с глубокой темнотой и туманом */
+        .bg {
             position:fixed; top:0; left:0;
             width:100%; height:100%;
             z-index:0;
             background:
-                /* Небо */
-                radial-gradient(ellipse at 70% 20%, rgba(30,40,80,0.8) 0%, transparent 60%),
-                radial-gradient(ellipse at 30% 60%, rgba(20,15,50,0.9) 0%, transparent 50%),
-                linear-gradient(to bottom, #0a0a18 0%, #0d0d20 40%, #0a0a15 100%),
-                /* Звёзды */
-                radial-gradient(1px 1px at 15% 8%, rgba(255,255,255,0.7) 0%, transparent 100%),
-                radial-gradient(1px 1px at 25% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
-                radial-gradient(1.5px 1.5px at 45% 5%, rgba(255,255,255,0.8) 0%, transparent 100%),
-                radial-gradient(1px 1px at 60% 12%, rgba(255,255,255,0.6) 0%, transparent 100%),
-                radial-gradient(1px 1px at 75% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
-                radial-gradient(1.5px 1.5px at 85% 18%, rgba(255,255,255,0.7) 0%, transparent 100%),
-                radial-gradient(1px 1px at 10% 22%, rgba(255,255,255,0.4) 0%, transparent 100%),
-                radial-gradient(1px 1px at 50% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
-                radial-gradient(1px 1px at 90% 28%, rgba(255,255,255,0.6) 0%, transparent 100%);
+                radial-gradient(ellipse at 30% 70%, rgba(20,10,30,0.8) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(15,5,25,0.9) 0%, transparent 55%),
+                linear-gradient(to bottom, #020208, #050510);
         }
 
-        /* ===== ГОРОД ===== */
-        .city-skyline {
-            position:fixed; bottom:0; left:0;
-            width:100%; height:45%;
-            z-index:1;
-            pointer-events:none;
-        }
-        .building {
-            position:absolute;
-            bottom:0;
-            background:rgba(5,5,15,0.9);
-            border-top:1px solid rgba(255,255,255,0.03);
-        }
-        .building::after {
-            content:'';
-            position:absolute;
-            top:0; left:0;
-            width:100%; height:100%;
-            background:
-                radial-gradient(ellipse at 30% 80%, rgba(255,200,100,0.08) 0%, transparent 40%),
-                radial-gradient(ellipse at 70% 60%, rgba(255,180,80,0.05) 0%, transparent 35%);
-        }
-        .window {
-            position:absolute;
-            background:rgba(255,200,100,0.15);
-            border-radius:1px;
-            animation:windowGlow 3s ease-in-out infinite;
-        }
-        @keyframes windowGlow {
-            0%,100% { opacity:0.3; }
-            50% { opacity:0.7; }
-        }
-
-        /* ===== САКУРА ===== */
-        .sakura-tree {
-            position:fixed;
-            z-index:2;
-            pointer-events:none;
-        }
-        .sakura-branch {
-            position:absolute;
-            width:3px;
-            background:rgba(40,20,20,0.6);
-            border-radius:3px;
-            transform-origin:left center;
-        }
-        .sakura-petal {
-            position:absolute;
-            width:8px; height:8px;
-            background:rgba(255,160,180,0.7);
-            border-radius:50% 0 50% 0;
-            animation:petalFall linear infinite;
-        }
-        @keyframes petalFall {
-            0% { transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
-            10% { opacity:1; }
-            90% { opacity:0.8; }
-            100% { transform:translateY(105vh) translateX(80px) rotate(360deg); opacity:0; }
-        }
-
-        /* ===== ДОЖДЬ НА СТЕКЛЕ ===== */
+        /* Дождь на стекле */
         .rain-glass {
             position:fixed; top:0; left:0;
             width:100%; height:100%;
@@ -111,19 +40,44 @@
         }
         .raindrop {
             position:absolute;
-            width:2px;
-            background:linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(200,220,255,0.1));
+            width:1.5px;
+            background:linear-gradient(to bottom, rgba(200,210,240,0.5), rgba(180,200,230,0.05));
             border-radius:0 0 2px 2px;
             animation:rainFall linear infinite;
         }
         @keyframes rainFall {
             0% { transform:translateY(-10vh); opacity:0; }
             5% { opacity:1; }
-            95% { opacity:0.8; }
-            100% { transform:translateY(105vh); opacity:0; }
+            95% { opacity:0.6; }
+            100% { transform:translateY(110vh); opacity:0; }
         }
 
-        /* ===== КОНТЕНТ ===== */
+        /* Лепестки чёрной розы (в стиле сайта) */
+        .petals {
+            position:fixed; top:0; left:0;
+            width:100%; height:100%;
+            z-index:4;
+            pointer-events:none;
+        }
+        .petal {
+            position:absolute;
+            top:-30px;
+            font-size:18px;
+            color:rgba(60,10,40,0.7);
+            filter:drop-shadow(0 0 4px rgba(100,20,60,0.4));
+            animation:petalFall linear forwards;
+            opacity:0;
+        }
+        @keyframes petalFall {
+            0% { transform:translateY(0) translateX(0) rotate(0deg) scale(0.8); opacity:0; }
+            10% { opacity:0.9; }
+            30% { transform:translateY(20vh) translateX(-20px) rotate(45deg) scale(0.9); }
+            60% { transform:translateY(55vh) translateX(30px) rotate(180deg) scale(1); }
+            90% { opacity:0.5; }
+            100% { transform:translateY(105vh) translateX(-10px) rotate(360deg) scale(0.3); opacity:0; }
+        }
+
+        /* Контент */
         .content {
             position:relative;
             z-index:10;
@@ -136,31 +90,26 @@
             text-align:center;
         }
         .glass-card {
-            background:rgba(10,8,20,0.45);
-            backdrop-filter:blur(16px);
-            -webkit-backdrop-filter:blur(16px);
-            border:1px solid rgba(255,255,255,0.08);
-            border-radius:24px;
-            padding:30px 24px;
-            max-width:450px;
+            background:rgba(10,5,20,0.4);
+            backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,0.06);
+            border-radius:28px;
+            padding:32px 24px;
+            max-width:420px;
             width:100%;
-            box-shadow:0 20px 60px rgba(0,0,0,0.5);
+            box-shadow:0 20px 60px rgba(0,0,0,0.6);
         }
         .glass-card h1 {
             font-family:"Cormorant Garamond",serif;
             font-weight:300;
-            font-size:34px;
-            color:#d0d8f0;
-            margin-bottom:12px;
+            font-size:36px;
+            color:#c8d0e8;
+            margin-bottom:16px;
             letter-spacing:3px;
         }
-        .glass-card p {
-            font-size:15px;
-            color:rgba(200,210,230,0.7);
-            line-height:1.7;
-        }
 
-        /* ===== РЕГУЛЯТОР ГРОМКОСТИ ===== */
+        /* Ползунок громкости */
         .volume-control {
             display:flex;
             align-items:center;
@@ -186,9 +135,8 @@
             box-shadow:0 0 8px rgba(150,180,220,0.5);
         }
 
-        /* ===== КНОПКА ===== */
         .back-btn {
-            margin-top:22px;
+            margin-top:24px;
             padding:12px 32px;
             border-radius:30px;
             border:1px solid rgba(255,255,255,0.2);
@@ -209,24 +157,21 @@
         }
 
         @media (max-width:600px) {
-            .glass-card { padding:22px 16px; }
-            .glass-card h1 { font-size:26px; }
-            .glass-card p { font-size:13px; }
-            .volume-slider { width:90px; }
+            .glass-card { padding:24px 16px; }
+            .glass-card h1 { font-size:28px; }
+            .volume-slider { width:100px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="japan-bg"></div>
-    <div class="city-skyline" id="citySkyline"></div>
-    <div class="sakura-tree" id="sakuraTree"></div>
+    <div class="bg"></div>
     <div class="rain-glass" id="rainGlass"></div>
+    <div class="petals" id="petals"></div>
 
     <div class="content">
         <div class="glass-card">
             <h1>Тихое место</h1>
-            <p>Ночь. Токио. Дождь за окном.<br>Сакура качает ветвями.<br>Ты в безопасности.</p>
             <div class="volume-control">
                 <span class="volume-icon">🌧</span>
                 <input type="range" class="volume-slider" id="rainVolume" min="0" max="100" value="40">
@@ -239,117 +184,22 @@
     <audio id="rainAudio" loop>
         <source src="rain.mp3" type="audio/mpeg">
     </audio>
-        <audio id="lofiAudio" loop>
+    <audio id="lofiAudio" loop>
         <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946f2a53c2.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // ===== ГОРОД =====
-        (function(){
-            var skyline = document.getElementById('citySkyline');
-            var buildings = [
-                {left:'0%', width:'8%', height:'35%'},
-                {left:'5%', width:'6%', height:'28%'},
-                {left:'10%', width:'10%', height:'42%'},
-                {left:'18%', width:'5%', height:'30%'},
-                {left:'22%', width:'7%', height:'38%'},
-                {left:'28%', width:'4%', height:'25%'},
-                {left:'32%', width:'9%', height:'44%'},
-                {left:'40%', width:'6%', height:'32%'},
-                {left:'45%', width:'8%', height:'36%'},
-                {left:'52%', width:'5%', height:'27%'},
-                {left:'56%', width:'11%', height:'40%'},
-                {left:'66%', width:'6%', height:'34%'},
-                {left:'70%', width:'7%', height:'29%'},
-                {left:'76%', width:'4%', height:'33%'},
-                {left:'80%', width:'9%', height:'41%'},
-                {left:'88%', width:'6%', height:'31%'},
-                {left:'93%', width:'8%', height:'37%'}
-            ];
-            buildings.forEach(function(b){
-                var div = document.createElement('div');
-                div.className = 'building';
-                div.style.left = b.left;
-                div.style.width = b.width;
-                div.style.height = b.height;
-                // Окна
-                var numWindows = Math.floor(parseInt(b.height) * 0.8);
-                for(var i=0; i<numWindows; i+=8){
-                    var w = document.createElement('div');
-                    w.className = 'window';
-                    w.style.left = (Math.random()*80+5)+'%';
-                    w.style.top = (Math.random()*70+5)+'%';
-                    w.style.width = (Math.random()*3+2)+'px';
-                    w.style.height = (Math.random()*3+2)+'px';
-                    w.style.animationDelay = Math.random()*3+'s';
-                    w.style.animationDuration = (Math.random()*2+2)+'s';
-                    div.appendChild(w);
-                }
-                skyline.appendChild(div);
-            });
-        })();
-
-        // ===== САКУРА =====
-        (function(){
-            var tree = document.getElementById('sakuraTree');
-            tree.style.cssText = 'right:5%; top:10%; width:180px; height:220px;';
-
-            // Ветви
-            var branches = [
-                {x:90, y:30, angle:20, length:70},
-                {x:90, y:30, angle:-25, length:60},
-                {x:90, y:30, angle:50, length:50},
-                {x:90, y:30, angle:-55, length:55},
-                {x:70, y:10, angle:10, length:40},
-                {x:100, y:0, angle:-15, length:45},
-                {x:110, y:50, angle:30, length:35},
-                {x:60, y:60, angle:-40, length:40}
-            ];
-            branches.forEach(function(b){
-                var branch = document.createElement('div');
-                branch.className = 'sakura-branch';
-                branch.style.left = b.x+'px';
-                branch.style.top = b.y+'px';
-                branch.style.width = b.length+'px';
-                branch.style.transform = 'rotate('+b.angle+'deg)';
-                tree.appendChild(branch);
-            });
-
-            // Лепестки сакуры (цветы на ветвях)
-            for(var i=0; i<20; i++){
-                var flower = document.createElement('div');
-                flower.style.cssText = 'position:absolute; width:14px; height:14px; background:radial-gradient(circle, rgba(255,180,200,0.8), rgba(255,140,170,0.4)); border-radius:50%; filter:blur(2px);';
-                flower.style.left = (60+Math.random()*80)+'px';
-                flower.style.top = (Math.random()*100)+'px';
-                tree.appendChild(flower);
-            }
-
-            // Падающие лепестки
-            function createFallingPetal(){
-                var petal = document.createElement('div');
-                petal.className = 'sakura-petal';
-                petal.style.left = (60+Math.random()*100)+'px';
-                petal.style.top = '-20px';
-                petal.style.animationDuration = (Math.random()*8+8)+'s';
-                petal.style.animationDelay = Math.random()*3+'s';
-                tree.appendChild(petal);
-                setTimeout(function(){ petal.remove(); }, 16000);
-            }
-            setInterval(createFallingPetal, 2000);
-            for(var j=0; j<5; j++) setTimeout(createFallingPetal, j*400);
-        })();
-
-        // ===== ДОЖДЬ =====
+        // Дождь
         (function(){
             var glass = document.getElementById('rainGlass');
-            for(var i=0; i<120; i++){
+            for(var i=0; i<100; i++){
                 var drop = document.createElement('div');
                 drop.className = 'raindrop';
                 drop.style.left = Math.random()*100+'%';
                 drop.style.top = Math.random()*100+'%';
-                drop.style.height = (Math.random()*15+8)+'px';
+                drop.style.height = (Math.random()*12+6)+'px';
                 drop.style.opacity = Math.random()*0.5+0.2;
-                drop.style.animationDuration = (Math.random()*0.8+0.5)+'s';
+                drop.style.animationDuration = (Math.random()*0.7+0.4)+'s';
                 drop.style.animationDelay = Math.random()*2+'s';
                 glass.appendChild(drop);
             }
@@ -358,33 +208,46 @@
                 drop.className = 'raindrop';
                 drop.style.left = Math.random()*100+'%';
                 drop.style.top = '-5%';
-                drop.style.height = (Math.random()*15+8)+'px';
+                drop.style.height = (Math.random()*12+6)+'px';
                 drop.style.opacity = Math.random()*0.5+0.2;
-                drop.style.animationDuration = (Math.random()*0.8+0.5)+'s';
+                drop.style.animationDuration = (Math.random()*0.7+0.4)+'s';
                 glass.appendChild(drop);
-                setTimeout(function(){ drop.remove(); }, 2000);
-            }, 80);
+                setTimeout(function(){ drop.remove(); }, 1500);
+            }, 70);
         })();
 
-        // ===== ЗВУК =====
+        // Лепестки чёрной розы
+        (function(){
+            var container = document.getElementById('petals');
+            function createPetal(){
+                var p = document.createElement('div');
+                p.className = 'petal';
+                p.innerHTML = ['🥀','🖤','💜','🌑'][Math.floor(Math.random()*4)];
+                p.style.left = Math.random()*100+'%';
+                p.style.fontSize = (Math.random()*14+12)+'px';
+                p.style.animationDuration = (Math.random()*10+8)+'s';
+                container.appendChild(p);
+                setTimeout(function(){ p.remove(); }, 18000);
+            }
+            setInterval(createPetal, 1200);
+            for(var i=0;i<6;i++) setTimeout(createPetal, i*500);
+        })();
+
+        // Звуки
         (function(){
             var rain = document.getElementById('rainAudio');
             var lofi = document.getElementById('lofiAudio');
             var slider = document.getElementById('rainVolume');
-
             rain.volume = 0.4;
-            lofi.volume = 0.2;
-            lofi.play().catch(function(){});
+            lofi.volume = 0.18;
 
-            // Автовоспроизведение при первом касании
             document.addEventListener('click', function(){
                 rain.play().catch(function(){});
                 lofi.play().catch(function(){});
             }, {once:true});
 
             slider.addEventListener('input', function(){
-                var vol = this.value / 100;
-                rain.volume = vol;
+                rain.volume = this.value / 100;
             });
         })();
     </script>
