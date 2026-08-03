@@ -51,9 +51,10 @@
     <div class="screen message-screen" id="msg1">
         <div class="glass-panel">
             <p class="message-text">Любовь моя. Я часто думаю о том, как ты там...</p>
-            <p class="message-text delay-1">Всё ли у тебя хорошо, не устала ли, не голодна ли, не грустно ли тебе.</p>
-            <p class="message-text delay-2">Я хочу знать, что ты в порядке и счастлива. Не чтобы контролировать, а чтобы быть спокойным.</p>
-            <p class="message-text delay-3">Чтобы если что-то не так — ты знала, что я рядом.</p>
+            <p class="message-text">Всё ли у тебя хорошо, не устала ли, не голодна ли, не грустно ли тебе.</p>
+            <p class="message-text">Я хочу знать, что ты в порядке и счастлива. Не чтобы контролировать, а чтобы быть спокойным.</p>
+            <p class="message-text">Чтобы если что-то не так — ты знала, что я рядом.</p>
+            <button class="glow-btn continue-btn">Дальше ✨</button>
         </div>
     </div>
 
@@ -76,9 +77,10 @@
     <div class="screen message-screen" id="msg2">
         <div class="glass-panel">
             <p class="message-text">Желаю, чтобы мы однажды проснулись и увидели друг друга.</p>
-            <p class="message-text delay-1">Ты будешь смотреть на меня, а я на тебя. И мы ничего не будем говорить —</p>
-            <p class="message-text delay-2">потому что всё уже понятно. Мы будем просто улыбаться,</p>
-            <p class="message-text delay-3">потому что у нас есть друг друг.</p>
+            <p class="message-text">Ты будешь смотреть на меня, а я на тебя. И мы ничего не будем говорить —</p>
+            <p class="message-text">потому что всё уже понятно. Мы будем просто улыбаться,</p>
+            <p class="message-text">потому что у нас есть друг друг.</p>
+            <button class="glow-btn continue-btn">Дальше ✨</button>
         </div>
     </div>
 
@@ -101,10 +103,11 @@
     <div class="screen message-screen" id="msg3">
         <div class="glass-panel">
             <p class="message-text">Я хочу быть тем самым человеком, с которым ты не боишься быть собой.</p>
-            <p class="message-text delay-1">С которым ты будешь чувствовать себя комфортно, даже когда ты устала,</p>
-            <p class="message-text delay-2">даже когда злишься, даже когда тебе кажется, что ты слишком странная для этого мира —</p>
-            <p class="message-text delay-3">я буду рядом и буду смотреть на тебя с восхищением.</p>
-            <p class="message-text delay-4">И я буду любить тебя именно такой всегда.</p>
+            <p class="message-text">С которым ты будешь чувствовать себя комфортно, даже когда ты устала,</p>
+            <p class="message-text">даже когда злишься, даже когда тебе кажется, что ты слишком странная для этого мира —</p>
+            <p class="message-text">я буду рядом и буду смотреть на тебя с восхищением.</p>
+            <p class="message-text">И я буду любить тебя именно такой всегда.</p>
+            <button class="glow-btn continue-btn">Дальше ✨</button>
         </div>
     </div>
 
@@ -128,10 +131,11 @@
     <div class="screen message-screen" id="msg4">
         <div class="glass-panel">
             <p class="message-text">Я не знаю, что будет завтра. Но я точно знаю,</p>
-            <p class="message-text delay-1">что хочу, чтобы ты была в моём завтра.</p>
-            <p class="message-text delay-2">Хочу знать, что ты улыбаешься, что ты в безопасности,</p>
-            <p class="message-text delay-3">что ты чувствуешь себя нужной.</p>
-            <p class="message-text delay-4">Ты — та, ради кого я готов быть лучше.</p>
+            <p class="message-text">что хочу, чтобы ты была в моём завтра.</p>
+            <p class="message-text">Хочу знать, что ты улыбаешься, что ты в безопасности,</p>
+            <p class="message-text">что ты чувствуешь себя нужной.</p>
+            <p class="message-text">Ты — та, ради кого я готов быть лучше.</p>
+            <button class="glow-btn continue-btn">Дальше ✨</button>
         </div>
     </div>
 
@@ -170,36 +174,47 @@
     <div class="screen confession" id="confession">
         <div class="glass-panel">
             <div id="confessionLines"></div>
+            <button class="glow-btn continue-btn" id="confessionContinue" style="display:none;">Дальше ✨</button>
         </div>
     </div>
 
     <!-- ====== ФИНАЛ ====== -->
     <div class="screen finale" id="finale">
-        <div class="glass-panel" id="finalePanel">
-            <h2>Ты у меня самая...</h2>
-            <div id="finaleWords"></div>
-            <p class="finale-text" id="finaleLove"></p>
-            <div class="secret-rose-container">
-                <span class="secret-rose" id="secretRose">🌹</span>
-                <span class="secret-hint">Нажми на меня...</span>
+        <div class="finale-art-container">
+            <img src="art.jpg" alt="" class="finale-art" id="finaleArt">
+            <div class="finale-overlay">
+                <div class="glass-panel finale-glass">
+                    <h2>Ты у меня самая...</h2>
+                    <div id="finaleWords"></div>
+                    <p class="finale-text" id="finaleLove"></p>
+                    <div class="secret-rose-container">
+                        <span class="secret-rose" id="secretRose">🌹</span>
+                        <span class="secret-hint">Нажми на меня...</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- ====== СЕКРЕТНОЕ СООБЩЕНИЕ ====== -->
     <div class="screen secret-message" id="secretMessage">
-        <div class="glass-panel">
-            <p class="message-text">Ты нашла меня! Очень этому рад, что ты добралась до конца.</p>
-            <p class="message-text delay-1">Я знаю, что ты чувствуешь по отношению ко мне и видишь,</p>
-            <p class="message-text delay-2">что я что-то делаю для тебя, но не так, как нужно.</p>
-            <p class="message-text delay-3">Но с тобой я становлюсь лучше с каждым днём,</p>
-            <p class="message-text delay-4">пусть на это и уходит много времени...</p>
-            <p class="message-text delay-5">Пусть я и не всегда умею показывать свою любовь так, как ты заслуживаешь.</p>
-            <p class="message-text delay-6">Но я хочу, чтобы ты знала: ты — моё самое драгоценное будущее.</p>
-            <p class="message-text delay-7">И я буду делать всё, чтобы мы были вместе.</p>
-            <p class="message-text delay-8">Не потому что должен, а потому что хочу.</p>
-            <p class="message-text delay-9">Потому что ты — та, ради кого я хочу просыпаться каждый день.</p>
-            <button id="backFromSecret" class="glow-btn">Вернуться обратно 🌙</button>
+        <div class="finale-art-container">
+            <img src="art.jpg" alt="" class="finale-art">
+            <div class="finale-overlay">
+                <div class="glass-panel secret-glass">
+                    <p class="message-text">Ты нашла меня! Очень этому рад, что ты добралась до конца.</p>
+                    <p class="message-text">Я знаю, что ты чувствуешь по отношению ко мне и видишь,</p>
+                    <p class="message-text">что я что-то делаю для тебя, но не так, как нужно.</p>
+                    <p class="message-text">Но с тобой я становлюсь лучше с каждым днём,</p>
+                    <p class="message-text">пусть на это и уходит много времени...</p>
+                    <p class="message-text">Пусть я и не всегда умею показывать свою любовь так, как ты заслуживаешь.</p>
+                    <p class="message-text">Но я хочу, чтобы ты знала: ты — моё самое драгоценное будущее.</p>
+                    <p class="message-text">И я буду делать всё, чтобы мы были вместе.</p>
+                    <p class="message-text">Не потому что должен, а потому что хочу.</p>
+                    <p class="message-text">Потому что ты — та, ради кого я хочу просыпаться каждый день.</p>
+                    <button id="backFromSecret" class="glow-btn">Вернуться обратно 🌙</button>
+                </div>
+            </div>
         </div>
     </div>
 
