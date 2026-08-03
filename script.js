@@ -61,48 +61,31 @@ document.querySelectorAll('.options').forEach(function(opt){
     });
 });
 
-// ============ СООБЩЕНИЯ (СТРЕЛКА → В УГЛУ) ============
+// ============ СООБЩЕНИЯ (СТРЕЛКА →) ============
 function showMessages(msgId, nextId){
     var screen = document.getElementById(msgId);
     showScreen(msgId);
-
     var panel = screen.querySelector('.glass-panel');
     var msgs = screen.querySelectorAll('.message-text');
-
-    // Скрываем старую кнопку "Дальше" если есть
     var oldBtn = panel.querySelector('.continue-btn');
     if(oldBtn) oldBtn.style.display = 'none';
-
-    // Удаляем старую стрелку если есть
-    var oldArrow = panel.querySelector('.continue-arrow');
+    var oldArrow = panel.querySelector('.arrow-wrapper');
     if(oldArrow) oldArrow.remove();
 
-    // Создаём контейнер для стрелки (в правом нижнем углу)
     var arrowWrap = document.createElement('div');
     arrowWrap.className = 'arrow-wrapper';
     arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
-
     var arrow = document.createElement('span');
     arrow.className = 'continue-arrow';
     arrow.innerHTML = '→';
-    arrow.style.cssText = 'display:none; font-size:26px; color:rgba(255,255,255,0.5); cursor:pointer; animation:arrowPulse 2s ease-in-out infinite; transition:color 0.3s;';
+    arrow.style.cssText = 'display:none;';
     arrowWrap.appendChild(arrow);
     panel.appendChild(arrowWrap);
 
-    // Стиль для анимации (добавим динамически)
-    if(!document.getElementById('arrowStyle')){
-        var style = document.createElement('style');
-        style.id = 'arrowStyle';
-        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
-        document.head.appendChild(style);
-    }
-
-    // Показываем текст медленно
     msgs.forEach(function(m, i){
         setTimeout(function(){ m.classList.add('show'); }, i * 2000);
     });
 
-    // Стрелка появляется после последнего сообщения
     var total = msgs.length * 2000 + 2000;
     setTimeout(function(){
         arrow.style.display = 'inline-block';
@@ -110,8 +93,6 @@ function showMessages(msgId, nextId){
             hideScreen(msgId);
             setTimeout(function(){ showScreen(nextId); }, 800);
         };
-        arrow.addEventListener('mouseenter', function(){ this.style.color = 'rgba(200,160,255,0.9)'; });
-        arrow.addEventListener('mouseleave', function(){ this.style.color = 'rgba(255,255,255,0.5)'; });
     }, total);
 }
 
@@ -141,7 +122,7 @@ document.getElementById('next6').addEventListener('click', function(){
     hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 800);
 });
 
-// ============ ИСПОВЕДЬ (СТРЕЛКА → В УГЛУ) ============
+// ============ ИСПОВЕДЬ ============
 function startConfession(){
     var lines = [
         'Я мог бы просто сказать, что люблю тебя...',
@@ -152,35 +133,21 @@ function startConfession(){
     ];
     var container = document.getElementById('confessionLines');
     container.innerHTML = '';
-
     var panel = document.getElementById('confession').querySelector('.glass-panel');
-
-    // Скрываем старую кнопку
     var oldBtn = document.getElementById('confessionCont');
     if(oldBtn) oldBtn.style.display = 'none';
-
-    // Удаляем старую стрелку
     var oldArrow = panel.querySelector('.arrow-wrapper');
     if(oldArrow) oldArrow.remove();
 
-    // Создаём стрелку
     var arrowWrap = document.createElement('div');
     arrowWrap.className = 'arrow-wrapper';
     arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
-
     var arrow = document.createElement('span');
     arrow.className = 'continue-arrow';
     arrow.innerHTML = '→';
-    arrow.style.cssText = 'display:none; font-size:26px; color:rgba(255,255,255,0.5); cursor:pointer; animation:arrowPulse 2s ease-in-out infinite; transition:color 0.3s;';
+    arrow.style.cssText = 'display:none;';
     arrowWrap.appendChild(arrow);
     panel.appendChild(arrowWrap);
-
-    if(!document.getElementById('arrowStyle')){
-        var style = document.createElement('style');
-        style.id = 'arrowStyle';
-        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
-        document.head.appendChild(style);
-    }
 
     lines.forEach(function(line, i){
         var p = document.createElement('p');
@@ -197,12 +164,10 @@ function startConfession(){
             hideScreen('confession');
             setTimeout(function(){ showFinale(); }, 800);
         };
-        arrow.addEventListener('mouseenter', function(){ this.style.color = 'rgba(200,160,255,0.9)'; });
-        arrow.addEventListener('mouseleave', function(){ this.style.color = 'rgba(255,255,255,0.5)'; });
     }, total);
 }
 
-// ============ ФИНАЛ ============
+// ============ ФИНАЛ (С СОЗВЕЗДИЕМ НА ФОНЕ) ============
 function showFinale(){
     var words = [
         'милая','симпатичная','красивая','хорошенькая','обаятельная',
@@ -229,6 +194,10 @@ function showFinale(){
         container.appendChild(span);
         setTimeout(function(){ span.classList.add('show'); }, i * 100);
     });
+
+    // Добавляем созвездие на фон
+    addConstellationBg('finale');
+
     showScreen('finale');
     setTimeout(function(){
         var t = document.getElementById('finaleLove');
@@ -243,9 +212,11 @@ function showFinale(){
 // ============ СЕКРЕТНАЯ РОЗА ============
 document.getElementById('secretRose').addEventListener('click', function(){
     hideScreen('finale');
+    removeConstellationBg();
     setTimeout(function(){
         var sec = document.getElementById('secretMessage');
         showScreen('secretMessage');
+        addConstellationBg('secretMessage');
         sec.querySelectorAll('.message-text').forEach(function(m, i){
             setTimeout(function(){ m.classList.add('show'); }, i * 1200);
         });
@@ -253,5 +224,113 @@ document.getElementById('secretRose').addEventListener('click', function(){
 });
 document.getElementById('backFromSecret').addEventListener('click', function(){
     hideScreen('secretMessage');
-    setTimeout(function(){ showScreen('finale'); }, 800);
+    removeConstellationBg();
+    setTimeout(function(){ showFinale(); }, 800);
 });
+
+// ============ СОЗВЕЗДИЕ НА ФОНЕ ============
+
+var constellationWishes = [
+    'Пусть даже в самый тяжёлый день ты никогда не забываешь, насколько ты дорога.',
+    'Я хочу, чтобы ты чаще улыбалась. Потому что твоя улыбка делает мир теплее.',
+    'Желаю тебе всегда находить силы идти вперёд, даже если путь кажется сложным.',
+    'Пусть рядом с тобой будут люди, которые действительно ценят тебя.',
+    'И пусть однажды все твои мечты перестанут быть мечтами.',
+    'Береги своё доброе сердце. Оно прекраснее любой звезды.',
+    'Желаю тебе столько счастья, сколько звёзд сейчас над твоей головой.',
+    'Даже если будет грустно — помни, ты никогда не была и не будешь для меня обычным человеком.',
+    'Спасибо тебе просто за то, что ты есть.',
+    'И если бы мне снова пришлось выбирать — я бы всё равно выбрал именно тебя.'
+];
+
+function addConstellationBg(parentId){
+    removeConstellationBg();
+    var bg = document.createElement('div');
+    bg.id = 'constellationBg';
+    bg.className = 'constellation-bg';
+
+    // Позиции для 10 звёзд
+    var positions = [
+        {top:'8%', left:'15%'}, {top:'5%', left:'75%'},
+        {top:'25%', left:'8%'}, {top:'20%', left:'85%'},
+        {top:'40%', left:'20%'}, {top:'35%', left:'78%'},
+        {top:'55%', left:'12%'}, {top:'50%', left:'88%'},
+        {top:'70%', left:'22%'}, {top:'65%', left:'72%'}
+    ];
+
+    // Полярная звезда
+    var polar = document.createElement('div');
+    polar.className = 'constellation-bg-star';
+    polar.innerHTML = '🌟';
+    polar.style.cssText = 'position:absolute; top:38%; left:44%; font-size:44px; animation:starFloat 2.5s ease-in-out infinite; filter:drop-shadow(0 0 16px rgba(255,215,0,0.9));';
+    polar.setAttribute('data-wish', 'polar');
+    polar.style.pointerEvents = 'all';
+    polar.style.cursor = 'pointer';
+    polar.addEventListener('click', function(e){
+        e.stopPropagation();
+        showWishCard('polar');
+    });
+    bg.appendChild(polar);
+
+    positions.forEach(function(pos, i){
+        var star = document.createElement('div');
+        star.className = 'constellation-bg-star';
+        star.innerHTML = '⭐';
+        star.style.cssText = 'position:absolute; top:'+pos.top+'; left:'+pos.left+'; font-size:26px; animation-delay:'+(i*0.3)+'s;';
+        star.setAttribute('data-wish', i);
+        star.style.pointerEvents = 'all';
+        star.style.cursor = 'pointer';
+        star.addEventListener('click', function(e){
+            e.stopPropagation();
+            showWishCard(i);
+        });
+        bg.appendChild(star);
+    });
+
+    document.body.appendChild(bg);
+}
+
+function removeConstellationBg(){
+    var bg = document.getElementById('constellationBg');
+    if(bg) bg.remove();
+}
+
+function showWishCard(index){
+    var oldCard = document.querySelector('.wish-card-overlay');
+    if(oldCard) oldCard.remove();
+
+    var overlay = document.createElement('div');
+    overlay.className = 'wish-card-overlay';
+
+    var card = document.createElement('div');
+    card.className = 'glass-panel';
+    card.style.cssText = 'max-width:450px; animation:cardAppear 0.5s ease;';
+
+    if(index === 'polar'){
+        card.innerHTML = '<h2 style="font-size:20px; margin-bottom:16px;">🌟 Полярная звезда</h2><p style="font-size:17px; color:#e0d0f0; line-height:1.7;">Пока существует хотя бы одна звезда во Вселенной...<br><br>я буду желать тебе счастья.<br><br>❤️</p>';
+    } else {
+        card.innerHTML = '<h2 style="font-size:20px; margin-bottom:16px;">⭐ Пожелание '+(index+1)+'</h2><p style="font-size:17px; color:#e0d0f0; line-height:1.7;">'+constellationWishes[index]+'</p>';
+    }
+
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'glow-btn';
+    closeBtn.textContent = 'Закрыть';
+    closeBtn.addEventListener('click', function(){ overlay.remove(); });
+    card.appendChild(closeBtn);
+
+    overlay.appendChild(card);
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', function(e){
+        if(e.target === overlay) overlay.remove();
+    });
+
+    // Золотим звезду
+    if(index !== 'polar'){
+        var stars = document.querySelectorAll('.constellation-bg-star[data-wish="'+index+'"]');
+        stars.forEach(function(s){
+            s.innerHTML = '🌟';
+            s.style.filter = 'drop-shadow(0 0 12px rgba(255,215,0,0.9))';
+        });
+    }
+}
