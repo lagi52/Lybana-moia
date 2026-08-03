@@ -8,14 +8,14 @@ function createPetal() {
     petal.classList.add('petal');
     petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
     petal.style.left = Math.random() * 100 + '%';
-    petal.style.fontSize = (Math.random() * 20 + 16) + 'px';
+    petal.style.fontSize = (Math.random() * 16 + 14) + 'px';
     petal.style.animationDuration = (Math.random() * 8 + 8) + 's';
     petalsContainer.appendChild(petal);
     setTimeout(() => petal.remove(), 16000);
 }
 
-setInterval(createPetal, 800);
-for (let i = 0; i < 6; i++) setTimeout(createPetal, i * 400);
+setInterval(createPetal, 900);
+for (let i = 0; i < 5; i++) setTimeout(createPetal, i * 500);
 
 // ============ МУЗЫКА ============
 
@@ -36,9 +36,33 @@ musicToggle.addEventListener('click', () => {
     musicPlaying = !musicPlaying;
 });
 
-// ============ ВЫБОР НЕСКОЛЬКИХ ОТВЕТОВ ============
+// ============ ЭКРАНЫ ============
 
-const allAnswers = {}; // Хранилище всех ответов
+const screens = {
+    intro: document.getElementById('intro'),
+    bridge: document.getElementById('bridge'),
+    q1: document.getElementById('q1'),
+    q2: document.getElementById('q2'),
+    q3: document.getElementById('q3'),
+    q4: document.getElementById('q4'),
+    q5: document.getElementById('q5'),
+    confession: document.getElementById('confession'),
+    finale: document.getElementById('finale')
+};
+
+function showScreen(screen) {
+    screen.style.display = 'flex';
+    setTimeout(() => screen.classList.add('show'), 50);
+}
+
+function hideScreen(screen) {
+    screen.classList.remove('show');
+    setTimeout(() => { screen.style.display = 'none'; }, 1200);
+}
+
+// ============ ВЫБОР ОТВЕТОВ ============
+
+const allAnswers = {};
 
 document.querySelectorAll('.options').forEach(optionsContainer => {
     const questionId = optionsContainer.getAttribute('data-question');
@@ -49,7 +73,6 @@ document.querySelectorAll('.options').forEach(optionsContainer => {
     optionsContainer.querySelectorAll('.option-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             btn.classList.toggle('selected');
-
             const answer = btn.textContent.trim();
 
             if (btn.classList.contains('selected')) {
@@ -60,7 +83,6 @@ document.querySelectorAll('.options').forEach(optionsContainer => {
                 allAnswers[questionId] = allAnswers[questionId].filter(a => a !== answer);
             }
 
-            // Активируем кнопку "Продолжить"
             if (allAnswers[questionId].length > 0) {
                 nextBtn.classList.add('active');
             } else {
@@ -70,40 +92,34 @@ document.querySelectorAll('.options').forEach(optionsContainer => {
     });
 });
 
-// ============ ПЕРЕХОДЫ МЕЖДУ ЭКРАНАМИ ============
+// ============ ФРАЗЫ-МОСТИКИ ============
 
-const screens = {
-    intro: document.getElementById('intro'),
-    q1: document.getElementById('q1'),
-    q2: document.getElementById('q2'),
-    q3: document.getElementById('q3'),
-    q4: document.getElementById('q4'),
-    q5: document.getElementById('q5'),
-    summary: document.getElementById('summary'),
-    finale: document.getElementById('finale')
+const bridges = {
+    'q1': 'Но это только настроение...<br>А что делает тебя по-настоящему счастливой?',
+    'q2': 'Счастье — это важно...<br>Но какой ты себя видишь?',
+    'q3': 'Ты знаешь, какая ты...<br>Но что тебе по-настоящему близко?',
+    'q4': 'И всё же...<br>Есть что-то, что делает тебя особенной.',
 };
 
-function showScreen(screen) {
-    screen.classList.add('show');
-}
+function showBridge(fromQuestionId, nextScreen) {
+    const bridgeText = document.getElementById('bridgeText');
+    bridgeText.innerHTML = bridges[fromQuestionId] || '...';
+    showScreen(screens.bridge);
 
-function hideScreen(screen) {
-    screen.classList.remove('show');
-    setTimeout(() => { screen.style.display = 'none'; }, 1000);
-}
-
-// Пролог → Вопрос 1
-document.getElementById('start').addEventListener('click', () => {
-    screens.intro.style.opacity = '0';
     setTimeout(() => {
-        screens.intro.style.display = 'none';
-        showScreen(screens.q1);
-    }, 1000);
+        hideScreen(screens.bridge);
+        setTimeout(() => showScreen(nextScreen), 1200);
+    }, 3000);
+}
+
+// ============ НАВИГАЦИЯ ============
+
+document.getElementById('start').addEventListener('click', () => {
+    hideScreen(screens.intro);
+    setTimeout(() => showScreen(screens.q1), 1200);
 });
 
-// Навигация по вопросам
-const nextButtons = document.querySelectorAll('.next-btn');
-nextButtons.forEach((btn, index) => {
+document.querySelectorAll('.next-btn').forEach((btn, index) => {
     btn.addEventListener('click', () => {
         const currentScreen = btn.closest('.question-screen');
         const currentId = currentScreen.id;
@@ -113,45 +129,47 @@ nextButtons.forEach((btn, index) => {
 
         setTimeout(() => {
             if (nextId === 'q6') {
-                // Показываем сбор ответов
-                showSummary();
+                showConfession();
             } else {
-                showScreen(screens[nextId]);
+                showBridge(currentId, screens[nextId]);
             }
-        }, 1000);
+        }, 1200);
     });
 });
 
-// ============ СБОР ОТВЕТОВ ============
+// ============ ТИХАЯ ИСПОВЕДЬ ============
 
-function showSummary() {
-    const summaryDiv = document.getElementById('summaryAnswers');
-    summaryDiv.innerHTML = '';
+function showConfession() {
+    const lines = [
+        'Я мог бы просто сказать, что люблю тебя...',
+        'Но этого было бы слишком мало.',
+        'Поэтому я попросил целую вселенную...',
+        '...помочь мне описать тебя.',
+        'И вот что у неё получилось...'
+    ];
 
-    let allSelected = [];
-    for (const q in allAnswers) {
-        allSelected = allSelected.concat(allAnswers[q]);
-    }
+    const container = document.getElementById('confessionLines');
+    container.innerHTML = '';
 
-    allSelected.forEach((answer, i) => {
-        const tag = document.createElement('span');
-        tag.classList.add('answer-tag');
-        tag.textContent = answer.replace(/[^\w\sа-яА-ЯёЁ]/g, '').trim();
-        tag.style.animationDelay = (i * 0.15) + 's';
-        summaryDiv.appendChild(tag);
+    lines.forEach((line, i) => {
+        const p = document.createElement('p');
+        p.classList.add('confession-line');
+        p.textContent = line;
+        container.appendChild(p);
+
+        setTimeout(() => {
+            p.classList.add('show');
+        }, i * 1800);
     });
 
-    showScreen(screens.summary);
-}
+    showScreen(screens.confession);
 
-// ============ ПЕРЕХОД К ФИНАЛУ ============
-
-document.getElementById('toFinale').addEventListener('click', () => {
-    hideScreen(screens.summary);
+    // Переход к финалу
     setTimeout(() => {
-        showFinale();
-    }, 1000);
-});
+        hideScreen(screens.confession);
+        setTimeout(() => showFinale(), 1200);
+    }, lines.length * 1800 + 1500);
+}
 
 // ============ ФИНАЛ ============
 
@@ -174,22 +192,31 @@ function showFinale() {
         'интересная', 'пленительная', 'незабываемая', 'не похожая на других'
     ];
 
-    const finaleDiv = document.getElementById('finaleWords');
-    finaleDiv.innerHTML = '';
+    const container = document.getElementById('finaleWords');
+    container.innerHTML = '';
 
     words.forEach((word, i) => {
         const span = document.createElement('span');
         span.textContent = word;
-        span.style.opacity = '0';
-        span.style.display = 'inline-block';
-        span.style.margin = '0 6px';
-        span.style.transition = 'opacity 0.5s ease';
-        finaleDiv.appendChild(span);
+        container.appendChild(span);
 
         setTimeout(() => {
-            span.style.opacity = '1';
-        }, i * 100);
+            span.classList.add('show');
+        }, i * 80);
     });
 
     showScreen(screens.finale);
+
+    // Финальная фраза
+    setTimeout(() => {
+        const loveText = document.getElementById('finaleLove');
+        loveText.innerHTML = 'Пока существует хотя бы одна звезда...<br>...я буду выбирать тебя. ❤️';
+        loveText.classList.add('show');
+    }, words.length * 80 + 1000);
 }
+
+// ============ КНОПКА ПОВТОРА ============
+
+document.getElementById('replayBtn').addEventListener('click', () => {
+    location.reload();
+});
