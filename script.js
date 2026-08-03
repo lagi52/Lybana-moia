@@ -3,85 +3,82 @@
     var layers = document.querySelectorAll('[data-parallax]');
     var mouseX = 0, mouseY = 0;
     var targetX = 0, targetY = 0;
-
     document.addEventListener('mousemove', function(e){
         mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
         mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     });
-
-    // Для телефонов
     window.addEventListener('deviceorientation', function(e){
         if(e.gamma && e.beta){
             mouseX = Math.max(-1, Math.min(1, e.gamma / 30));
             mouseY = Math.max(-1, Math.min(1, e.beta / 30));
         }
     }, true);
-
     function animate(){
         targetX += (mouseX - targetX) * 0.04;
         targetY += (mouseY - targetY) * 0.04;
-
         layers.forEach(function(layer){
             var speed = parseFloat(layer.getAttribute('data-parallax'));
-            var moveX = targetX * speed * 40;
-            var moveY = targetY * speed * 40;
-            layer.style.transform = 'translate('+moveX+'px, '+moveY+'px)';
+            layer.style.transform = 'translate('+(targetX*speed*40)+'px, '+(targetY*speed*40)+'px)';
         });
-
         requestAnimationFrame(animate);
     }
     animate();
 })();
 
-// ============ СВЕТЯЩИЕСЯ ЧАСТИЦЫ ============
+// ============ ЧАСТИЦЫ ============
 (function(){
-    var container = document.getElementById('particles');
-    function createParticle(){
-        var p = document.createElement('div');
-        p.className = 'particle';
-        var size = Math.random() * 4 + 2;
-        p.style.width = size + 'px';
-        p.style.height = size + 'px';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.top = '105%';
-        p.style.background = 'rgba('+(180+Math.random()*75)+','+(100+Math.random()*80)+','+(220+Math.random()*35)+','+(0.6+Math.random()*0.4)+')';
-        p.style.animationDuration = (Math.random() * 12 + 10) + 's';
-        container.appendChild(p);
-        setTimeout(function(){ p.remove(); }, 22000);
+    var c = document.getElementById('particles');
+    function p(){
+        var d = document.createElement('div');
+        d.className = 'particle';
+        var s = Math.random()*4+2;
+        d.style.width = s+'px'; d.style.height = s+'px';
+        d.style.left = Math.random()*100+'%'; d.style.top = '105%';
+        d.style.background = 'rgba('+(180+Math.random()*75)+','+(100+Math.random()*80)+','+(220+Math.random()*35)+','+(0.6+Math.random()*0.4)+')';
+        d.style.animationDuration = (Math.random()*12+10)+'s';
+        c.appendChild(d);
+        setTimeout(function(){ d.remove(); }, 22000);
     }
-    setInterval(createParticle, 600);
-    for(var i=0; i<8; i++) setTimeout(createParticle, i*300);
+    setInterval(p, 600);
+    for(var i=0;i<8;i++) setTimeout(p, i*300);
 })();
 
 // ============ ЭМБИЕНТ ============
 (function(){
     var btn = document.getElementById('ambientToggle');
-    var audio = document.getElementById('ambientSound');
-    audio.volume = 0.15;
+    var a = document.getElementById('ambientSound');
+    a.volume = 0.15;
     var playing = false;
     btn.addEventListener('click', function(){
-        if(playing){
-            audio.pause();
-            btn.classList.remove('playing');
-            btn.querySelector('.ambient-icon').textContent = '🔇';
-        } else {
-            audio.play().catch(function(){});
-            btn.classList.add('playing');
-            btn.querySelector('.ambient-icon').textContent = '🎵';
-        }
+        if(playing){ a.pause(); btn.classList.remove('playing'); btn.querySelector('.ambient-icon').textContent='🔇'; }
+        else { a.play().catch(function(){}); btn.classList.add('playing'); btn.querySelector('.ambient-icon').textContent='🎵'; }
         playing = !playing;
     });
 })();
 
-// ============ ДИАФРАГМА ============
+// ============ МУЗЫКА ============
+(function(){
+    var btn = document.getElementById('musicToggle');
+    var a = document.getElementById('bgMusic');
+    a.volume = 0.4;
+    var playing = false;
+    btn.addEventListener('click', function(){
+        if(playing){ a.pause(); btn.classList.remove('playing'); btn.querySelector('.music-icon').textContent='🎵'; }
+        else { a.play().catch(function(){}); btn.classList.add('playing'); btn.querySelector('.music-icon').textContent='🎶'; }
+        playing = !playing;
+    });
+})();
+
+// ============ ДИАФРАГМА (ТОЛЬКО СТАРТ) ============
+var irisUsed = false;
 function irisTransition(callback){
+    if(irisUsed){ callback(); return; }
+    irisUsed = true;
     var iris = document.getElementById('irisTransition');
     iris.classList.add('active');
     setTimeout(function(){
         callback();
-        setTimeout(function(){
-            iris.classList.remove('active');
-        }, 200);
+        setTimeout(function(){ iris.classList.remove('active'); }, 300);
     }, 800);
 }
 
@@ -118,27 +115,35 @@ document.querySelectorAll('.options').forEach(function(opt){
     });
 });
 
-// ============ СООБЩЕНИЯ ============
+// ============ СООБЩЕНИЯ (СТРЕЛКА) ============
 function showMessages(msgId, nextId){
     var screen = document.getElementById(msgId);
     showScreen(msgId);
     var msgs = screen.querySelectorAll('.message-text');
-    var btn = screen.querySelector('.continue-btn');
-    if(btn) btn.style.display = 'none';
+    var panel = screen.querySelector('.glass-panel');
+    var oldArrow = panel.querySelector('.arrow-wrapper');
+    if(oldArrow) oldArrow.remove();
+
+    var wrap = document.createElement('div');
+    wrap.className = 'arrow-wrapper';
+    var arrow = document.createElement('span');
+    arrow.className = 'continue-arrow';
+    arrow.innerHTML = '→';
+    arrow.style.display = 'none';
+    wrap.appendChild(arrow);
+    panel.appendChild(wrap);
+
     msgs.forEach(function(m, i){
         setTimeout(function(){ m.classList.add('show'); }, i * 2200);
     });
+
     var total = msgs.length * 2200 + 2200;
     setTimeout(function(){
-        if(btn){
-            btn.style.display = 'inline-block';
-            btn.onclick = function(){
-                irisTransition(function(){
-                    hideScreen(msgId);
-                    setTimeout(function(){ showScreen(nextId); }, 600);
-                });
-            };
-        }
+        arrow.style.display = 'inline-block';
+        arrow.onclick = function(){
+            hideScreen(msgId);
+            setTimeout(function(){ showScreen(nextId); }, 600);
+        };
     }, total);
 }
 
@@ -150,12 +155,12 @@ document.getElementById('startBtn').addEventListener('click', function(){
     });
 });
 
-document.getElementById('next1').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q1'); setTimeout(function(){ showMessages('msg1','q2'); }, 600); }); });
-document.getElementById('next2').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q2'); setTimeout(function(){ showMessages('msg2','q3'); }, 600); }); });
-document.getElementById('next3').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q3'); setTimeout(function(){ showMessages('msg3','q4'); }, 600); }); });
-document.getElementById('next4').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q4'); setTimeout(function(){ showMessages('msg4','q5'); }, 600); }); });
-document.getElementById('next5').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q5'); setTimeout(function(){ showScreen('q6'); }, 600); }); });
-document.getElementById('next6').addEventListener('click', function(){ irisTransition(function(){ hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 600); }); });
+document.getElementById('next1').addEventListener('click', function(){ hideScreen('q1'); setTimeout(function(){ showMessages('msg1','q2'); }, 600); });
+document.getElementById('next2').addEventListener('click', function(){ hideScreen('q2'); setTimeout(function(){ showMessages('msg2','q3'); }, 600); });
+document.getElementById('next3').addEventListener('click', function(){ hideScreen('q3'); setTimeout(function(){ showMessages('msg3','q4'); }, 600); });
+document.getElementById('next4').addEventListener('click', function(){ hideScreen('q4'); setTimeout(function(){ showMessages('msg4','q5'); }, 600); });
+document.getElementById('next5').addEventListener('click', function(){ hideScreen('q5'); setTimeout(function(){ showScreen('q6'); }, 600); });
+document.getElementById('next6').addEventListener('click', function(){ hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 600); });
 
 // ============ ИСПОВЕДЬ ============
 function startConfession(){
@@ -167,9 +172,22 @@ function startConfession(){
         'И вот что у неё получилось...'
     ];
     var container = document.getElementById('confessionLines');
-    var btn = document.getElementById('confessionCont');
     container.innerHTML = '';
-    btn.style.display = 'none';
+    var panel = document.getElementById('confession').querySelector('.glass-panel');
+    var oldBtn = document.getElementById('confessionCont');
+    if(oldBtn) oldBtn.style.display = 'none';
+    var oldArrow = panel.querySelector('.arrow-wrapper');
+    if(oldArrow) oldArrow.remove();
+
+    var wrap = document.createElement('div');
+    wrap.className = 'arrow-wrapper';
+    var arrow = document.createElement('span');
+    arrow.className = 'continue-arrow';
+    arrow.innerHTML = '→';
+    arrow.style.display = 'none';
+    wrap.appendChild(arrow);
+    panel.appendChild(wrap);
+
     lines.forEach(function(line, i){
         var p = document.createElement('p');
         p.className = 'confession-line';
@@ -177,13 +195,12 @@ function startConfession(){
         container.appendChild(p);
         setTimeout(function(){ p.classList.add('show'); }, i * 2400);
     });
+
     setTimeout(function(){
-        btn.style.display = 'inline-block';
-        btn.onclick = function(){
-            irisTransition(function(){
-                hideScreen('confession');
-                setTimeout(function(){ showFinale(); }, 600);
-            });
+        arrow.style.display = 'inline-block';
+        arrow.onclick = function(){
+            hideScreen('confession');
+            setTimeout(function(){ showFinale(); }, 600);
         };
     }, lines.length * 2400 + 2200);
 }
@@ -221,25 +238,20 @@ function showFinale(){
 
 // ============ СЕКРЕТНАЯ РОЗА И СОЗВЕЗДИЕ ============
 document.getElementById('secretRose').addEventListener('click', function(){
-    irisTransition(function(){
-        hideScreen('finale');
-        setTimeout(function(){
-            var sec = document.getElementById('secretMessage');
-            showScreen('secretMessage');
-            sec.querySelectorAll('.message-text').forEach(function(m, i){
-                setTimeout(function(){ m.classList.add('show'); }, i * 1400);
-            });
-        }, 600);
-    });
+    hideScreen('finale');
+    setTimeout(function(){
+        var sec = document.getElementById('secretMessage');
+        showScreen('secretMessage');
+        sec.querySelectorAll('.message-text').forEach(function(m, i){
+            setTimeout(function(){ m.classList.add('show'); }, i * 1400);
+        });
+    }, 600);
 });
 document.getElementById('backFromSecret').addEventListener('click', function(){
-    irisTransition(function(){
-        hideScreen('secretMessage');
-        setTimeout(function(){ showFinale(); }, 600);
-    });
+    hideScreen('secretMessage');
+    setTimeout(function(){ showFinale(); }, 600);
 });
 
-// СОЗВЕЗДИЕ
 var constellationWishes = [
     'Пусть даже в самый тяжёлый день ты никогда не забываешь, насколько ты дорога.',
     'Я хочу, чтобы ты чаще улыбалась. Потому что твоя улыбка делает мир теплее.',
@@ -253,16 +265,12 @@ var constellationWishes = [
     'И если бы мне снова пришлось выбирать — я бы всё равно выбрал именно тебя.'
 ];
 document.getElementById('toConstellation').addEventListener('click', function(){
-    irisTransition(function(){
-        hideScreen('secretMessage');
-        setTimeout(function(){ buildConstellation(); }, 600);
-    });
+    hideScreen('secretMessage');
+    setTimeout(function(){ buildConstellation(); }, 600);
 });
 document.getElementById('backFromConstellation').addEventListener('click', function(){
-    irisTransition(function(){
-        hideScreen('constellationScreen');
-        setTimeout(function(){ showScreen('secretMessage'); }, 600);
-    });
+    hideScreen('constellationScreen');
+    setTimeout(function(){ showScreen('secretMessage'); }, 600);
 });
 
 function buildConstellation(){
@@ -279,8 +287,7 @@ function buildConstellation(){
         var star = document.createElement('div');
         star.className = 'constellation-star';
         star.innerHTML = '⭐';
-        star.style.top = pos.top;
-        star.style.left = pos.left;
+        star.style.top = pos.top; star.style.left = pos.left;
         star.style.animationDelay = (i*0.3)+'s';
         star.addEventListener('click', function(e){ e.stopPropagation(); showWishCard(i, star); });
         container.appendChild(star);
@@ -288,8 +295,7 @@ function buildConstellation(){
     var polar = document.createElement('div');
     polar.className = 'constellation-star';
     polar.innerHTML = '🌟';
-    polar.style.top = '42%';
-    polar.style.left = '42%';
+    polar.style.top = '42%'; polar.style.left = '42%';
     polar.style.fontSize = '44px';
     polar.style.filter = 'drop-shadow(0 0 18px rgba(255,215,0,0.9))';
     polar.addEventListener('click', function(e){ e.stopPropagation(); showWishCard('polar', polar); });
