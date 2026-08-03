@@ -8,19 +8,49 @@
 </head>
 <body>
 
-<div class="stars"></div>
+    <!-- Живой космос -->
+    <div class="stars"></div>
+    <div class="stars stars2"></div>
+    <div class="stars stars3"></div>
 
-<div class="intro">
-    <div class="small-text">Для одного человека...</div>
-    <h1>Для Любови</h1>
-    <p>Этот маленький мир был создан только для тебя.</p>
-    <button id="start">Начать ✨</button>
-</div>
+    <!-- Падающие лепестки -->
+    <div class="petals" id="petals"></div>
 
-<div class="second-screen">
-    <h2>Добро пожаловать домой, Люба 🌙</h2>
-</div>
+    <!-- Кнопка музыки -->
+    <div class="music-toggle" id="musicToggle">
+        <span class="music-icon">🎵</span>
+    </div>
 
-<script src="script.js"></script>
+    <!-- Пролог -->
+    <div class="intro" id="intro">
+        <div class="glass-panel">
+            <div class="small-text">Для одного человека...</div>
+            <h1>Для Любови</h1>
+            <p>Этот маленький мир был создан только для тебя.</p>
+            <button id="start">Начать ✨</button>
+        </div>
+    </div>
+
+    <!-- Первый вопрос -->
+    <div class="question-screen" id="question1">
+        <div class="glass-panel">
+            <h2>Какая ты сегодня?</h2>
+            <div class="options">
+                <button class="option-btn" data-answer="Нежная">❤️ Нежная</button>
+                <button class="option-btn" data-answer="Загадочная">🖤 Загадочная</button>
+                <button class="option-btn" data-answer="Спокойная">🌙 Спокойная</button>
+                <button class="option-btn" data-answer="Романтичная">🌹 Романтичная</button>
+                <button class="option-btn" data-answer="Улыбчивая">✨ Улыбчивая</button>
+                <button class="option-btn" data-answer="Вредная">😈 Немножко вредная</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Аудио (заменишь позже) -->
+    <audio id="bgMusic" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
 </body>
 </html>
