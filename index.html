@@ -8,15 +8,15 @@
 </head>
 <body>
 
-    <!-- Живой космос -->
+    <!-- Космос -->
     <div class="stars"></div>
     <div class="stars stars2"></div>
     <div class="stars stars3"></div>
 
-    <!-- Падающие лепестки -->
+    <!-- Лепестки -->
     <div class="petals" id="petals"></div>
 
-    <!-- Кнопка музыки -->
+    <!-- Музыка -->
     <div class="music-toggle" id="musicToggle">
         <span class="music-icon">🎵</span>
     </div>
@@ -31,22 +31,110 @@
         </div>
     </div>
 
-    <!-- Первый вопрос -->
-    <div class="question-screen" id="question1">
+    <!-- Вопрос 1: Какая ты сегодня? -->
+    <div class="question-screen" id="q1">
         <div class="glass-panel">
             <h2>Какая ты сегодня?</h2>
-            <div class="options">
-                <button class="option-btn" data-answer="Нежная">❤️ Нежная</button>
-                <button class="option-btn" data-answer="Загадочная">🖤 Загадочная</button>
-                <button class="option-btn" data-answer="Спокойная">🌙 Спокойная</button>
-                <button class="option-btn" data-answer="Романтичная">🌹 Романтичная</button>
-                <button class="option-btn" data-answer="Улыбчивая">✨ Улыбчивая</button>
-                <button class="option-btn" data-answer="Вредная">😈 Немножко вредная</button>
+            <p class="hint">Можно выбрать несколько</p>
+            <div class="options" data-question="1">
+                <button class="option-btn">😊 Весёлая</button>
+                <button class="option-btn">🥺 Нежная</button>
+                <button class="option-btn">😌 Спокойная</button>
+                <button class="option-btn">😏 Загадочная</button>
+                <button class="option-btn">😈 Вредная</button>
+                <button class="option-btn">❤️ Влюблённая</button>
             </div>
+            <button class="next-btn">Продолжить ✨</button>
         </div>
     </div>
 
-    <!-- Аудио (заменишь позже) -->
+    <!-- Вопрос 2: Что делает тебя счастливее? -->
+    <div class="question-screen" id="q2">
+        <div class="glass-panel">
+            <h2>Что делает тебя счастливее?</h2>
+            <p class="hint">Можно выбрать несколько</p>
+            <div class="options" data-question="2">
+                <button class="option-btn">🌙 Ночь</button>
+                <button class="option-btn">🌹 Цветы</button>
+                <button class="option-btn">✨ Звёзды</button>
+                <button class="option-btn">🎵 Музыка</button>
+                <button class="option-btn">☕ Уют</button>
+                <button class="option-btn">🤍 Объятия</button>
+            </div>
+            <button class="next-btn">Продолжить ✨</button>
+        </div>
+    </div>
+
+    <!-- Вопрос 3: Какая ты? (из твоих слов) -->
+    <div class="question-screen" id="q3">
+        <div class="glass-panel">
+            <h2>Какая ты?</h2>
+            <p class="hint">Можно выбрать несколько</p>
+            <div class="options" data-question="3">
+                <button class="option-btn">💎 Элегантная</button>
+                <button class="option-btn">🌙 Загадочная</button>
+                <button class="option-btn">✨ Утончённая</button>
+                <button class="option-btn">🔥 Яркая</button>
+                <button class="option-btn">👑 Шикарная</button>
+                <button class="option-btn">💫 Неотразимая</button>
+            </div>
+            <button class="next-btn">Продолжить ✨</button>
+        </div>
+    </div>
+
+    <!-- Вопрос 4: Что тебе ближе? -->
+    <div class="question-screen" id="q4">
+        <div class="glass-panel">
+            <h2>Что тебе ближе?</h2>
+            <p class="hint">Можно выбрать несколько</p>
+            <div class="options" data-question="4">
+                <button class="option-btn">🌸 Нежная</button>
+                <button class="option-btn">🫂 Заботливая</button>
+                <button class="option-btn">💜 Романтичная</button>
+                <button class="option-btn">🤗 Искренняя</button>
+                <button class="option-btn">🕊️ Верная</button>
+                <button class="option-btn">💖 Чувственная</button>
+            </div>
+            <button class="next-btn">Продолжить ✨</button>
+        </div>
+    </div>
+
+    <!-- Вопрос 5: Что делает тебя особенной? -->
+    <div class="question-screen" id="q5">
+        <div class="glass-panel">
+            <h2>Что делает тебя особенной?</h2>
+            <p class="hint">Можно выбрать несколько</p>
+            <div class="options" data-question="5">
+                <button class="option-btn">🌟 Неповторимая</button>
+                <button class="option-btn">🌌 Неземная</button>
+                <button class="option-btn">🎭 Загадочная</button>
+                <button class="option-btn">💫 Волшебная</button>
+                <button class="option-btn">👼 Божественная</button>
+                <button class="option-btn">🔮 Непостижимая</button>
+            </div>
+            <button class="next-btn">Продолжить ✨</button>
+        </div>
+    </div>
+
+    <!-- Сбор ответов (перед финалом) -->
+    <div class="question-screen" id="summary">
+        <div class="glass-panel">
+            <h2>Ты выбрала...</h2>
+            <div id="summaryAnswers"></div>
+            <p class="summary-text">Это всё — ты. Но это ещё не всё...</p>
+            <button id="toFinale">Узнать главное ❤️</button>
+        </div>
+    </div>
+
+    <!-- Финал (пока заглушка) -->
+    <div class="question-screen" id="finale">
+        <div class="glass-panel">
+            <h2>Ты у меня самая...</h2>
+            <div id="finaleWords"></div>
+            <p class="finale-text">Спасибо, что ты есть, Люба. ❤️</p>
+        </div>
+    </div>
+
     <audio id="bgMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
