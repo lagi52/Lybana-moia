@@ -38,18 +38,6 @@ musicToggle.addEventListener('click', () => {
 
 // ============ ЭКРАНЫ ============
 
-const screens = {
-    intro: document.getElementById('intro'),
-    bridge: document.getElementById('bridge'),
-    q1: document.getElementById('q1'),
-    q2: document.getElementById('q2'),
-    q3: document.getElementById('q3'),
-    q4: document.getElementById('q4'),
-    q5: document.getElementById('q5'),
-    confession: document.getElementById('confession'),
-    finale: document.getElementById('finale')
-};
-
 function showScreen(screen) {
     screen.style.display = 'flex';
     setTimeout(() => screen.classList.add('show'), 50);
@@ -67,79 +55,70 @@ const allAnswers = {};
 document.querySelectorAll('.options').forEach(optionsContainer => {
     const questionId = optionsContainer.getAttribute('data-question');
     allAnswers[questionId] = [];
-
     const nextBtn = optionsContainer.parentElement.querySelector('.next-btn');
 
     optionsContainer.querySelectorAll('.option-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             btn.classList.toggle('selected');
             const answer = btn.textContent.trim();
-
             if (btn.classList.contains('selected')) {
-                if (!allAnswers[questionId].includes(answer)) {
-                    allAnswers[questionId].push(answer);
-                }
+                if (!allAnswers[questionId].includes(answer)) allAnswers[questionId].push(answer);
             } else {
                 allAnswers[questionId] = allAnswers[questionId].filter(a => a !== answer);
             }
-
-            if (allAnswers[questionId].length > 0) {
-                nextBtn.classList.add('active');
-            } else {
-                nextBtn.classList.remove('active');
-            }
+            nextBtn.classList.toggle('active', allAnswers[questionId].length > 0);
         });
     });
 });
 
-// ============ ФРАЗЫ-МОСТИКИ ============
+// ============ ПОКАЗ СООБЩЕНИЙ ============
 
-const bridges = {
-    'q1': 'Но это только настроение...<br>А что делает тебя по-настоящему счастливой?',
-    'q2': 'Счастье — это важно...<br>Но какой ты себя видишь?',
-    'q3': 'Ты знаешь, какая ты...<br>Но что тебе по-настоящему близко?',
-    'q4': 'И всё же...<br>Есть что-то, что делает тебя особенной.',
-};
-
-function showBridge(fromQuestionId, nextScreen) {
-    const bridgeText = document.getElementById('bridgeText');
-    bridgeText.innerHTML = bridges[fromQuestionId] || '...';
-    showScreen(screens.bridge);
-
-    setTimeout(() => {
-        hideScreen(screens.bridge);
-        setTimeout(() => showScreen(nextScreen), 1200);
-    }, 3000);
+function showMessages(screenId, duration = 5000) {
+    const screen = document.getElementById(screenId);
+    showScreen(screen);
+    const messages = screen.querySelectorAll('.message-text');
+    messages.forEach((msg, i) => {
+        setTimeout(() => msg.classList.add('show'), i * 1200);
+    });
+    return new Promise(resolve => {
+        setTimeout(() => {
+            hideScreen(screen);
+            setTimeout(resolve, 1200);
+        }, duration);
+    });
 }
 
 // ============ НАВИГАЦИЯ ============
 
-document.getElementById('start').addEventListener('click', () => {
-    hideScreen(screens.intro);
-    setTimeout(() => showScreen(screens.q1), 1200);
+document.getElementById('start').addEventListener('click', async () => {
+    hideScreen(document.getElementById('intro'));
+    setTimeout(() => showScreen(document.getElementById('q1')), 1200);
 });
 
-document.querySelectorAll('.next-btn').forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-        const currentScreen = btn.closest('.question-screen');
-        const currentId = currentScreen.id;
-        const nextId = 'q' + (parseInt(currentId.replace('q', '')) + 1);
+async function goNext(currentId, nextId, msgId = null) {
+    const current = document.getElementById(currentId);
+    hideScreen(current);
+    await new Promise(r => setTimeout(r, 1200));
+    if (msgId) await showMessages(msgId);
+    showScreen(document.getElementById(nextId));
+}
 
-        hideScreen(currentScreen);
+document.querySelector('#q1 .next-btn').addEventListener('click', () => goNext('q1', 'q2', 'msg1'));
+document.querySelector('#q2 .next-btn').addEventListener('click', () => goNext('q2', 'q3', 'msg2'));
+document.querySelector('#q3 .next-btn').addEventListener('click', () => goNext('q3', 'q4', 'msg3'));
+document.querySelector('#q4 .next-btn').addEventListener('click', () => goNext('q4', 'q5', 'msg4'));
+document.querySelector('#q5 .next-btn').addEventListener('click', () => goNext('q5', 'q6'));
+document.querySelector('#q6 .next-btn').addEventListener('click', () => goNext('q6', 'confession'));
 
-        setTimeout(() => {
-            if (nextId === 'q6') {
-                showConfession();
-            } else {
-                showBridge(currentId, screens[nextId]);
-            }
-        }, 1200);
-    });
+// ============ ИСПОВЕДЬ ============
+
+const confessionScreen = document.getElementById('confession');
+const confessionObserver = new MutationObserver(() => {
+    if (confessionScreen.classList.contains('show')) startConfession();
 });
+confessionObserver.observe(confessionScreen, { attributes: true, attributeFilter: ['class'] });
 
-// ============ ТИХАЯ ИСПОВЕДЬ ============
-
-function showConfession() {
+function startConfession() {
     const lines = [
         'Я мог бы просто сказать, что люблю тебя...',
         'Но этого было бы слишком мало.',
@@ -147,26 +126,17 @@ function showConfession() {
         '...помочь мне описать тебя.',
         'И вот что у неё получилось...'
     ];
-
     const container = document.getElementById('confessionLines');
     container.innerHTML = '';
-
     lines.forEach((line, i) => {
         const p = document.createElement('p');
         p.classList.add('confession-line');
         p.textContent = line;
         container.appendChild(p);
-
-        setTimeout(() => {
-            p.classList.add('show');
-        }, i * 1800);
+        setTimeout(() => p.classList.add('show'), i * 1800);
     });
-
-    showScreen(screens.confession);
-
-    // Переход к финалу
     setTimeout(() => {
-        hideScreen(screens.confession);
+        hideScreen(confessionScreen);
         setTimeout(() => showFinale(), 1200);
     }, lines.length * 1800 + 1500);
 }
@@ -194,29 +164,40 @@ function showFinale() {
 
     const container = document.getElementById('finaleWords');
     container.innerHTML = '';
-
     words.forEach((word, i) => {
         const span = document.createElement('span');
         span.textContent = word;
         container.appendChild(span);
-
-        setTimeout(() => {
-            span.classList.add('show');
-        }, i * 80);
+        setTimeout(() => span.classList.add('show'), i * 80);
     });
 
-    showScreen(screens.finale);
+    showScreen(document.getElementById('finale'));
 
-    // Финальная фраза
     setTimeout(() => {
         const loveText = document.getElementById('finaleLove');
-        loveText.innerHTML = 'Пока существует хотя бы одна звезда...<br>...я буду выбирать тебя. ❤️';
+        loveText.innerHTML = 'Ты изменила меня. Спасибо тебе, что ты есть —<br>тихая, хорошая, тёплая, настоящая.<br><br>Люблю тебя. И буду любить, пока ты позволяешь...<br>и даже дольше. ❤️';
         loveText.classList.add('show');
-    }, words.length * 80 + 1000);
+    }, words.length * 80 + 800);
+
+    setTimeout(() => {
+        document.querySelector('.secret-rose-container').classList.add('show');
+    }, words.length * 80 + 2500);
 }
 
-// ============ КНОПКА ПОВТОРА ============
+// ============ СЕКРЕТНАЯ РОЗА ============
 
-document.getElementById('replayBtn').addEventListener('click', () => {
-    location.reload();
+document.getElementById('secretRose').addEventListener('click', () => {
+    hideScreen(document.getElementById('finale'));
+    setTimeout(() => {
+        const secretScreen = document.getElementById('secretMessage');
+        showScreen(secretScreen);
+        secretScreen.querySelectorAll('.message-text').forEach((msg, i) => {
+            setTimeout(() => msg.classList.add('show'), i * 1000);
+        });
+    }, 1200);
+});
+
+document.getElementById('backFromSecret').addEventListener('click', () => {
+    hideScreen(document.getElementById('secretMessage'));
+    setTimeout(() => showScreen(document.getElementById('finale')), 1200);
 });
