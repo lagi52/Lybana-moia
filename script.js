@@ -71,46 +71,71 @@ document.querySelectorAll('.options').forEach(optionsContainer => {
     });
 });
 
-// ============ ПОКАЗ СООБЩЕНИЙ ============
+// ============ ПОКАЗ СООБЩЕНИЙ (С КНОПКОЙ) ============
 
-function showMessages(screenId, duration = 5000) {
+function showMessages(screenId, nextScreenId) {
     const screen = document.getElementById(screenId);
     showScreen(screen);
+
     const messages = screen.querySelectorAll('.message-text');
+    const continueBtn = screen.querySelector('.continue-btn');
+
+    // Показываем сообщения по очереди
     messages.forEach((msg, i) => {
-        setTimeout(() => msg.classList.add('show'), i * 1200);
+        setTimeout(() => msg.classList.add('show'), i * 1000);
     });
-    return new Promise(resolve => {
-        setTimeout(() => {
-            hideScreen(screen);
-            setTimeout(resolve, 1200);
-        }, duration);
-    });
+
+    // Показываем кнопку после последнего сообщения
+    setTimeout(() => {
+        continueBtn.style.display = 'inline-block';
+        continueBtn.style.animation = 'btnAppear 0.8s ease';
+    }, messages.length * 1000 + 500);
+
+    // По нажатию — переход
+    continueBtn.onclick = () => {
+        hideScreen(screen);
+        setTimeout(() => showScreen(document.getElementById(nextScreenId)), 1200);
+    };
 }
 
 // ============ НАВИГАЦИЯ ============
 
-document.getElementById('start').addEventListener('click', async () => {
+document.getElementById('start').addEventListener('click', () => {
     hideScreen(document.getElementById('intro'));
     setTimeout(() => showScreen(document.getElementById('q1')), 1200);
 });
 
-async function goNext(currentId, nextId, msgId = null) {
-    const current = document.getElementById(currentId);
-    hideScreen(current);
-    await new Promise(r => setTimeout(r, 1200));
-    if (msgId) await showMessages(msgId);
-    showScreen(document.getElementById(nextId));
-}
+document.querySelector('#q1 .next-btn').addEventListener('click', () => {
+    hideScreen(document.getElementById('q1'));
+    setTimeout(() => showMessages('msg1', 'q2'), 1200);
+});
 
-document.querySelector('#q1 .next-btn').addEventListener('click', () => goNext('q1', 'q2', 'msg1'));
-document.querySelector('#q2 .next-btn').addEventListener('click', () => goNext('q2', 'q3', 'msg2'));
-document.querySelector('#q3 .next-btn').addEventListener('click', () => goNext('q3', 'q4', 'msg3'));
-document.querySelector('#q4 .next-btn').addEventListener('click', () => goNext('q4', 'q5', 'msg4'));
-document.querySelector('#q5 .next-btn').addEventListener('click', () => goNext('q5', 'q6'));
-document.querySelector('#q6 .next-btn').addEventListener('click', () => goNext('q6', 'confession'));
+document.querySelector('#q2 .next-btn').addEventListener('click', () => {
+    hideScreen(document.getElementById('q2'));
+    setTimeout(() => showMessages('msg2', 'q3'), 1200);
+});
 
-// ============ ИСПОВЕДЬ ============
+document.querySelector('#q3 .next-btn').addEventListener('click', () => {
+    hideScreen(document.getElementById('q3'));
+    setTimeout(() => showMessages('msg3', 'q4'), 1200);
+});
+
+document.querySelector('#q4 .next-btn').addEventListener('click', () => {
+    hideScreen(document.getElementById('q4'));
+    setTimeout(() => showMessages('msg4', 'q5'), 1200);
+});
+
+document.querySelector('#q5 .next-btn').addEventListener('click', () => {
+    hideScreen(document.getElementById('q5'));
+    setTimeout(() => showScreen(document.getElementById('q6')), 1200);
+});
+
+document.querySelector('#q6 .next-btn').addEventListener('click', () => {
+    hideScreen(document.getElementById('q6'));
+    setTimeout(() => showScreen(document.getElementById('confession')), 1200);
+});
+
+// ============ ИСПОВЕДЬ (С КНОПКОЙ) ============
 
 const confessionScreen = document.getElementById('confession');
 const confessionObserver = new MutationObserver(() => {
@@ -127,7 +152,10 @@ function startConfession() {
         'И вот что у неё получилось...'
     ];
     const container = document.getElementById('confessionLines');
+    const continueBtn = document.getElementById('confessionContinue');
     container.innerHTML = '';
+    continueBtn.style.display = 'none';
+
     lines.forEach((line, i) => {
         const p = document.createElement('p');
         p.classList.add('confession-line');
@@ -135,10 +163,15 @@ function startConfession() {
         container.appendChild(p);
         setTimeout(() => p.classList.add('show'), i * 1800);
     });
+
     setTimeout(() => {
+        continueBtn.style.display = 'inline-block';
+    }, lines.length * 1800 + 500);
+
+    continueBtn.onclick = () => {
         hideScreen(confessionScreen);
         setTimeout(() => showFinale(), 1200);
-    }, lines.length * 1800 + 1500);
+    };
 }
 
 // ============ ФИНАЛ ============
