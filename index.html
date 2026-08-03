@@ -4,22 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Для Любови ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- ТУМАННОСТИ -->
-    <div class="nebula nebula-1"></div>
-    <div class="nebula nebula-2"></div>
-    <div class="nebula nebula-3"></div>
+    <div class="nebula nebula-1" data-parallax="0.02"></div>
+    <div class="nebula nebula-2" data-parallax="0.04"></div>
+    <div class="nebula nebula-3" data-parallax="0.06"></div>
 
     <!-- МЛЕЧНЫЙ ПУТЬ -->
-    <div class="milky-way"></div>
+    <div class="milky-way" data-parallax="0.01"></div>
 
     <!-- ЗВЁЗДЫ -->
-    <div class="stars-layer stars-far"></div>
-    <div class="stars-layer stars-mid"></div>
-    <div class="stars-layer stars-near"></div>
+    <div class="stars-layer stars-far" data-parallax="0.03"></div>
+    <div class="stars-layer stars-mid" data-parallax="0.06"></div>
+    <div class="stars-layer stars-near" data-parallax="0.09"></div>
 
     <!-- МЕРЦАНИЕ -->
     <div class="twinkle"></div>
@@ -28,14 +31,19 @@
     <div class="comet"></div>
     <div class="comet comet-2"></div>
 
-    <!-- ЛЕПЕСТКИ -->
-    <div class="petals" id="petals"></div>
+    <!-- СВЕТЯЩИЕСЯ ЧАСТИЦЫ -->
+    <div class="particles" id="particles"></div>
 
-    <div class="music-toggle" id="musicToggle">
-        <span class="music-icon">🎵</span>
+    <!-- КНОПКА ЭМБИЕНТА -->
+    <div class="ambient-toggle" id="ambientToggle">
+        <span class="ambient-icon">🔇</span>
+        <span class="ambient-waves"></span>
     </div>
 
-    <!-- ПРОЛОГ -->
+    <!-- ПЕРЕХОД-ДИАФРАГМА -->
+    <div class="iris-transition" id="irisTransition"></div>
+
+    <!-- ====== ПРОЛОГ ====== -->
     <div class="screen active" id="intro">
         <div class="glass-panel">
             <div class="small-text">Для одного человека...</div>
@@ -68,7 +76,7 @@
             <p class="message-text">Всё ли у тебя хорошо, не устала ли, не голодна ли, не грустно ли тебе.</p>
             <p class="message-text">Я хочу знать, что ты в порядке и счастлива. Не чтобы контролировать, а чтобы быть спокойным.</p>
             <p class="message-text">Чтобы если что-то не так — ты знала, что я рядом.</p>
-            <button class="glow-btn continue-btn" id="cont1">Дальше ✨</button>
+            <button class="glow-btn continue-btn" id="cont1" style="display:none;">Дальше ✨</button>
         </div>
     </div>
 
@@ -94,7 +102,7 @@
             <p class="message-text">Ты будешь смотреть на меня, а я на тебя. И мы ничего не будем говорить —</p>
             <p class="message-text">потому что всё уже понятно. Мы будем просто улыбаться,</p>
             <p class="message-text">потому что у нас есть друг друг.</p>
-            <button class="glow-btn continue-btn" id="cont2">Дальше ✨</button>
+            <button class="glow-btn continue-btn" id="cont2" style="display:none;">Дальше ✨</button>
         </div>
     </div>
 
@@ -121,7 +129,7 @@
             <p class="message-text">даже когда злишься, даже когда тебе кажется, что ты слишком странная для этого мира —</p>
             <p class="message-text">я буду рядом и буду смотреть на тебя с восхищением.</p>
             <p class="message-text">И я буду любить тебя именно такой всегда.</p>
-            <button class="glow-btn continue-btn" id="cont3">Дальше ✨</button>
+            <button class="glow-btn continue-btn" id="cont3" style="display:none;">Дальше ✨</button>
         </div>
     </div>
 
@@ -149,7 +157,7 @@
             <p class="message-text">Хочу знать, что ты улыбаешься, что ты в безопасности,</p>
             <p class="message-text">что ты чувствуешь себя нужной.</p>
             <p class="message-text">Ты — та, ради кого я готов быть лучше.</p>
-            <button class="glow-btn continue-btn" id="cont4">Дальше ✨</button>
+            <button class="glow-btn continue-btn" id="cont4" style="display:none;">Дальше ✨</button>
         </div>
     </div>
 
@@ -236,8 +244,16 @@
         <button id="backFromConstellation" class="glow-btn" style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); z-index:5;">Вернуться обратно 🌙</button>
     </div>
 
+    <!-- ПОРТАЛ В 18+ -->
+    <div class="portal-18" id="portal18" title="Измерение 18+">
+        <span class="portal-icon">🖤</span>
+    </div>
+
     <audio id="bgMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="ambientSound" loop>
+        <source src="ambient.mp3" type="audio/mpeg">
     </audio>
 
     <script src="script.js"></script>
