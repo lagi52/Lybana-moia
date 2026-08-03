@@ -43,30 +43,46 @@
     for(var i=0;i<8;i++) setTimeout(p, i*300);
 })();
 
-// ============ ЭМБИЕНТ ============
+// ============ МУЗЫКАЛЬНЫЙ ПЛЕЕР (2 ТРЕКА) ============
 (function(){
-    var btn = document.getElementById('ambientToggle');
-    var a = document.getElementById('ambientSound');
-    a.volume = 0.15;
+    var tracks = [
+        document.getElementById('song1'),
+        document.getElementById('song2')
+    ];
+    var currentTrack = 0;
     var playing = false;
-    btn.addEventListener('click', function(){
-        if(playing){ a.pause(); btn.classList.remove('playing'); btn.querySelector('.ambient-icon').textContent='🔇'; }
-        else { a.play().catch(function(){}); btn.classList.add('playing'); btn.querySelector('.ambient-icon').textContent='🎵'; }
-        playing = !playing;
-    });
-})();
+    var toggleBtn = document.getElementById('musicToggle');
+    var nextBtn = document.getElementById('musicNext');
+    var info = document.getElementById('musicInfo');
 
-// ============ МУЗЫКА ============
-(function(){
-    var btn = document.getElementById('musicToggle');
-    var a = document.getElementById('bgMusic');
-    a.volume = 0.4;
-    var playing = false;
-    btn.addEventListener('click', function(){
-        if(playing){ a.pause(); btn.classList.remove('playing'); btn.querySelector('.music-icon').textContent='🎵'; }
-        else { a.play().catch(function(){}); btn.classList.add('playing'); btn.querySelector('.music-icon').textContent='🎶'; }
+    tracks.forEach(function(t){ t.volume = 0.4; });
+
+    function updateInfo(){
+        info.textContent = 'Трек ' + (currentTrack + 1);
+    }
+
+    toggleBtn.addEventListener('click', function(){
+        if(playing){
+            tracks[currentTrack].pause();
+            toggleBtn.textContent = '🎵';
+        } else {
+            tracks[currentTrack].play().catch(function(){});
+            toggleBtn.textContent = '⏸';
+        }
         playing = !playing;
     });
+
+    nextBtn.addEventListener('click', function(){
+        if(playing) tracks[currentTrack].pause();
+        currentTrack = (currentTrack + 1) % tracks.length;
+        updateInfo();
+        if(playing){
+            tracks[currentTrack].currentTime = 0;
+            tracks[currentTrack].play().catch(function(){});
+        }
+    });
+
+    updateInfo();
 })();
 
 // ============ ДИАФРАГМА (ТОЛЬКО СТАРТ) ============
@@ -174,8 +190,6 @@ function startConfession(){
     var container = document.getElementById('confessionLines');
     container.innerHTML = '';
     var panel = document.getElementById('confession').querySelector('.glass-panel');
-    var oldBtn = document.getElementById('confessionCont');
-    if(oldBtn) oldBtn.style.display = 'none';
     var oldArrow = panel.querySelector('.arrow-wrapper');
     if(oldArrow) oldArrow.remove();
 
@@ -330,7 +344,10 @@ function showWishCard(index, starEl){
     }
 }
 
-// ============ ПОРТАЛ 18+ ============
+// ============ ПОРТАЛЫ ============
 document.getElementById('portal18').addEventListener('click', function(){
     window.location.href = 'adult.html';
+});
+document.getElementById('portalQuiet').addEventListener('click', function(){
+    window.location.href = 'quiet.html';
 });
