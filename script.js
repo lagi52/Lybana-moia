@@ -61,29 +61,48 @@ document.querySelectorAll('.options').forEach(function(opt){
     });
 });
 
-// ============ СООБЩЕНИЯ (МЕДЛЕННО, СТРЕЛКА) ============
+// ============ СООБЩЕНИЯ (СТРЕЛКА → В УГЛУ) ============
 function showMessages(msgId, nextId){
     var screen = document.getElementById(msgId);
     showScreen(msgId);
+
+    var panel = screen.querySelector('.glass-panel');
     var msgs = screen.querySelectorAll('.message-text');
 
+    // Скрываем старую кнопку "Дальше" если есть
+    var oldBtn = panel.querySelector('.continue-btn');
+    if(oldBtn) oldBtn.style.display = 'none';
+
     // Удаляем старую стрелку если есть
-    var oldArrow = screen.querySelector('.continue-arrow');
+    var oldArrow = panel.querySelector('.continue-arrow');
     if(oldArrow) oldArrow.remove();
 
-    // Создаём стрелку
-    var arrow = document.createElement('button');
-    arrow.className = 'continue-arrow';
-    arrow.innerHTML = '↓';
-    arrow.style.display = 'none';
-    screen.querySelector('.glass-panel').appendChild(arrow);
+    // Создаём контейнер для стрелки (в правом нижнем углу)
+    var arrowWrap = document.createElement('div');
+    arrowWrap.className = 'arrow-wrapper';
+    arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
 
-    // Показываем текст медленно (каждые 2 секунды)
+    var arrow = document.createElement('span');
+    arrow.className = 'continue-arrow';
+    arrow.innerHTML = '→';
+    arrow.style.cssText = 'display:none; font-size:26px; color:rgba(255,255,255,0.5); cursor:pointer; animation:arrowPulse 2s ease-in-out infinite; transition:color 0.3s;';
+    arrowWrap.appendChild(arrow);
+    panel.appendChild(arrowWrap);
+
+    // Стиль для анимации (добавим динамически)
+    if(!document.getElementById('arrowStyle')){
+        var style = document.createElement('style');
+        style.id = 'arrowStyle';
+        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
+        document.head.appendChild(style);
+    }
+
+    // Показываем текст медленно
     msgs.forEach(function(m, i){
         setTimeout(function(){ m.classList.add('show'); }, i * 2000);
     });
 
-    // Стрелка появляется через 2 секунды после последнего сообщения
+    // Стрелка появляется после последнего сообщения
     var total = msgs.length * 2000 + 2000;
     setTimeout(function(){
         arrow.style.display = 'inline-block';
@@ -91,6 +110,8 @@ function showMessages(msgId, nextId){
             hideScreen(msgId);
             setTimeout(function(){ showScreen(nextId); }, 800);
         };
+        arrow.addEventListener('mouseenter', function(){ this.style.color = 'rgba(200,160,255,0.9)'; });
+        arrow.addEventListener('mouseleave', function(){ this.style.color = 'rgba(255,255,255,0.5)'; });
     }, total);
 }
 
@@ -120,7 +141,7 @@ document.getElementById('next6').addEventListener('click', function(){
     hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 800);
 });
 
-// ============ ИСПОВЕДЬ (МЕДЛЕННО, СТРЕЛКА) ============
+// ============ ИСПОВЕДЬ (СТРЕЛКА → В УГЛУ) ============
 function startConfession(){
     var lines = [
         'Я мог бы просто сказать, что люблю тебя...',
@@ -132,16 +153,34 @@ function startConfession(){
     var container = document.getElementById('confessionLines');
     container.innerHTML = '';
 
+    var panel = document.getElementById('confession').querySelector('.glass-panel');
+
+    // Скрываем старую кнопку
+    var oldBtn = document.getElementById('confessionCont');
+    if(oldBtn) oldBtn.style.display = 'none';
+
     // Удаляем старую стрелку
-    var oldArrow = document.getElementById('confession').querySelector('.continue-arrow');
+    var oldArrow = panel.querySelector('.arrow-wrapper');
     if(oldArrow) oldArrow.remove();
 
     // Создаём стрелку
-    var arrow = document.createElement('button');
+    var arrowWrap = document.createElement('div');
+    arrowWrap.className = 'arrow-wrapper';
+    arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
+
+    var arrow = document.createElement('span');
     arrow.className = 'continue-arrow';
-    arrow.innerHTML = '↓';
-    arrow.style.display = 'none';
-    document.getElementById('confession').querySelector('.glass-panel').appendChild(arrow);
+    arrow.innerHTML = '→';
+    arrow.style.cssText = 'display:none; font-size:26px; color:rgba(255,255,255,0.5); cursor:pointer; animation:arrowPulse 2s ease-in-out infinite; transition:color 0.3s;';
+    arrowWrap.appendChild(arrow);
+    panel.appendChild(arrowWrap);
+
+    if(!document.getElementById('arrowStyle')){
+        var style = document.createElement('style');
+        style.id = 'arrowStyle';
+        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
+        document.head.appendChild(style);
+    }
 
     lines.forEach(function(line, i){
         var p = document.createElement('p');
@@ -158,6 +197,8 @@ function startConfession(){
             hideScreen('confession');
             setTimeout(function(){ showFinale(); }, 800);
         };
+        arrow.addEventListener('mouseenter', function(){ this.style.color = 'rgba(200,160,255,0.9)'; });
+        arrow.addEventListener('mouseleave', function(){ this.style.color = 'rgba(255,255,255,0.5)'; });
     }, total);
 }
 
