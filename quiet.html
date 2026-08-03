@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
-
         body {
             width:100%; height:100vh; height:100dvh;
             overflow:hidden;
@@ -19,8 +18,6 @@
             user-select:none;
             -webkit-user-select:none;
         }
-
-        /* Фон с глубокой темнотой и туманом */
         .bg {
             position:fixed; top:0; left:0;
             width:100%; height:100%;
@@ -30,8 +27,6 @@
                 radial-gradient(ellipse at 70% 30%, rgba(15,5,25,0.9) 0%, transparent 55%),
                 linear-gradient(to bottom, #020208, #050510);
         }
-
-        /* Дождь на стекле */
         .rain-glass {
             position:fixed; top:0; left:0;
             width:100%; height:100%;
@@ -51,8 +46,6 @@
             95% { opacity:0.6; }
             100% { transform:translateY(110vh); opacity:0; }
         }
-
-        /* Лепестки чёрной розы (в стиле сайта) */
         .petals {
             position:fixed; top:0; left:0;
             width:100%; height:100%;
@@ -76,8 +69,6 @@
             90% { opacity:0.5; }
             100% { transform:translateY(105vh) translateX(-10px) rotate(360deg) scale(0.3); opacity:0; }
         }
-
-        /* Контент */
         .content {
             position:relative;
             z-index:10;
@@ -108,8 +99,6 @@
             margin-bottom:16px;
             letter-spacing:3px;
         }
-
-        /* Ползунок громкости */
         .volume-control {
             display:flex;
             align-items:center;
@@ -134,7 +123,6 @@
             cursor:pointer;
             box-shadow:0 0 8px rgba(150,180,220,0.5);
         }
-
         .back-btn {
             margin-top:24px;
             padding:12px 32px;
@@ -155,7 +143,6 @@
             border-color:rgba(150,180,220,0.6);
             box-shadow:0 0 20px rgba(100,140,200,0.3);
         }
-
         @media (max-width:600px) {
             .glass-card { padding:24px 16px; }
             .glass-card h1 { font-size:28px; }
@@ -164,11 +151,9 @@
     </style>
 </head>
 <body>
-
     <div class="bg"></div>
     <div class="rain-glass" id="rainGlass"></div>
     <div class="petals" id="petals"></div>
-
     <div class="content">
         <div class="glass-card">
             <h1>Тихое место</h1>
@@ -180,74 +165,60 @@
             <button class="back-btn" onclick="window.location.href='index.html'">Вернуться обратно 🌙</button>
         </div>
     </div>
-
-    <audio id="rainAudio" loop>
-        <source src="rain.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="lofiAudio" loop>
-        <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946f2a53c2.mp3" type="audio/mpeg">
-    </audio>
-
+    <audio id="rainAudio" loop><source src="rain.mp3" type="audio/mpeg"></audio>
+    <audio id="lofiAudio" loop><source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946f2a53c2.mp3" type="audio/mpeg"></audio>
     <script>
-        // Дождь
         (function(){
-            var glass = document.getElementById('rainGlass');
-            for(var i=0; i<100; i++){
-                var drop = document.createElement('div');
-                drop.className = 'raindrop';
-                drop.style.left = Math.random()*100+'%';
-                drop.style.top = Math.random()*100+'%';
-                drop.style.height = (Math.random()*12+6)+'px';
-                drop.style.opacity = Math.random()*0.5+0.2;
-                drop.style.animationDuration = (Math.random()*0.7+0.4)+'s';
-                drop.style.animationDelay = Math.random()*2+'s';
-                glass.appendChild(drop);
+            var g=document.getElementById('rainGlass');
+            for(var i=0;i<100;i++){
+                var d=document.createElement('div');
+                d.className='raindrop';
+                d.style.left=Math.random()*100+'%';
+                d.style.top=Math.random()*100+'%';
+                d.style.height=(Math.random()*12+6)+'px';
+                d.style.opacity=Math.random()*0.5+0.2;
+                d.style.animationDuration=(Math.random()*0.7+0.4)+'s';
+                d.style.animationDelay=Math.random()*2+'s';
+                g.appendChild(d);
             }
             setInterval(function(){
-                var drop = document.createElement('div');
-                drop.className = 'raindrop';
-                drop.style.left = Math.random()*100+'%';
-                drop.style.top = '-5%';
-                drop.style.height = (Math.random()*12+6)+'px';
-                drop.style.opacity = Math.random()*0.5+0.2;
-                drop.style.animationDuration = (Math.random()*0.7+0.4)+'s';
-                glass.appendChild(drop);
-                setTimeout(function(){ drop.remove(); }, 1500);
-            }, 70);
+                var d=document.createElement('div');
+                d.className='raindrop';
+                d.style.left=Math.random()*100+'%';
+                d.style.top='-5%';
+                d.style.height=(Math.random()*12+6)+'px';
+                d.style.opacity=Math.random()*0.5+0.2;
+                d.style.animationDuration=(Math.random()*0.7+0.4)+'s';
+                g.appendChild(d);
+                setTimeout(function(){ d.remove(); },1500);
+            },70);
         })();
-
-        // Лепестки чёрной розы
         (function(){
-            var container = document.getElementById('petals');
-            function createPetal(){
-                var p = document.createElement('div');
-                p.className = 'petal';
-                p.innerHTML = ['🥀','🖤','💜','🌑'][Math.floor(Math.random()*4)];
-                p.style.left = Math.random()*100+'%';
-                p.style.fontSize = (Math.random()*14+12)+'px';
-                p.style.animationDuration = (Math.random()*10+8)+'s';
-                container.appendChild(p);
-                setTimeout(function(){ p.remove(); }, 18000);
+            var c=document.getElementById('petals');
+            function p(){
+                var d=document.createElement('div');
+                d.className='petal';
+                d.innerHTML=['🥀','🖤','💜','🌑'][Math.floor(Math.random()*4)];
+                d.style.left=Math.random()*100+'%';
+                d.style.fontSize=(Math.random()*14+12)+'px';
+                d.style.animationDuration=(Math.random()*10+8)+'s';
+                c.appendChild(d);
+                setTimeout(function(){ d.remove(); },18000);
             }
-            setInterval(createPetal, 1200);
-            for(var i=0;i<6;i++) setTimeout(createPetal, i*500);
+            setInterval(p,1200);
+            for(var i=0;i<6;i++) setTimeout(p,i*500);
         })();
-
-        // Звуки
         (function(){
-            var rain = document.getElementById('rainAudio');
-            var lofi = document.getElementById('lofiAudio');
-            var slider = document.getElementById('rainVolume');
-            rain.volume = 0.4;
-            lofi.volume = 0.18;
-
-            document.addEventListener('click', function(){
+            var rain=document.getElementById('rainAudio');
+            var lofi=document.getElementById('lofiAudio');
+            var slider=document.getElementById('rainVolume');
+            rain.volume=0.4; lofi.volume=0.18;
+            document.addEventListener('click',function(){
                 rain.play().catch(function(){});
                 lofi.play().catch(function(){});
-            }, {once:true});
-
-            slider.addEventListener('input', function(){
-                rain.volume = this.value / 100;
+            },{once:true});
+            slider.addEventListener('input',function(){
+                rain.volume=this.value/100;
             });
         })();
     </script>
