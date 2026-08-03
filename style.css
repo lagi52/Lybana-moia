@@ -257,12 +257,12 @@ h1, h2, .small-text, .confession-line {
     z-index: 100;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     background: rgba(10, 5, 20, 0.5);
     backdrop-filter: blur(14px);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 30px;
-    padding: 6px 14px;
+    padding: 6px 10px;
 }
 .music-btn {
     width: 36px;
@@ -282,15 +282,6 @@ h1, h2, .small-text, .confession-line {
     background: rgba(255,255,255,0.15);
     border-color: rgba(200,160,255,0.5);
     box-shadow: 0 0 15px rgba(160,100,255,0.3);
-}
-.music-info {
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
-    min-width: 50px;
-    text-align: center;
-    font-family: "Raleway", sans-serif;
-    font-weight: 300;
-    letter-spacing: 1px;
 }
 
 /* ДИАФРАГМА */
