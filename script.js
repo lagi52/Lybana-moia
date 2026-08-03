@@ -45,9 +45,10 @@
 
 // ============ МУЗЫКАЛЬНЫЙ ПЛЕЕР (2 ТРЕКА) ============
 (function(){
-    var tracks = [
+        var tracks = [
         document.getElementById('song1'),
-        document.getElementById('song2')
+        document.getElementById('song2'),
+        document.getElementById('song3')
     ];
     var currentTrack = 0;
     var playing = false;
