@@ -379,6 +379,7 @@
             // Автовоспроизведение при первом касании
             document.addEventListener('click', function(){
                 rain.play().catch(function(){});
+                lofi.play().catch(function(){});
             }, {once:true});
 
             slider.addEventListener('input', function(){
