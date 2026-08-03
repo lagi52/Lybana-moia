@@ -124,3 +124,68 @@ function startConfession(){
         p.className = 'confession-line';
         p.textContent = line;
         container.appendChild(p);
+        setTimeout(function(){ p.classList.add('show'); }, i*1800);
+    });
+    var total = lines.length * 1800 + 400;
+    setTimeout(function(){
+        btn.style.display = 'inline-block';
+        btn.onclick = function(){
+            hideScreen('confession');
+            setTimeout(function(){ showFinale(); }, 800);
+        };
+    }, total);
+}
+
+// ============ ФИНАЛ ============
+function showFinale(){
+    var words = [
+        'милая','симпатичная','красивая','хорошенькая','обаятельная',
+        'очаровательная','привлекательная','прелестная','чудесная','прекрасная',
+        'неотразимая','элегантная','утонченная','изящная','яркая',
+        'эффектная','шикарная','безупречная','совершенная','идеальная',
+        'бесподобная','сногсшибательная','несравненная','непревзойденная','замечательная',
+        'удивительная','поразительная','изумительная','восхитительная','исключительная',
+        'неповторимая','единственная','бесценная','обворожительная','соблазнительная',
+        'сладкая','обольстительная','ослепительная','великолепная','неземная',
+        'возвышенная','эфирная','весёлая','жизнерадостная','бодрая',
+        'рассудительная','эрудированная','воспитанная','верная','преданная',
+        'открытая','понимающая','искренняя','добрая','мягкая',
+        'нежная','ласковая','заботливая','сентиментальная','романтичная',
+        'чувственная','темпераментная','грациозная','волшебная','сказочная',
+        'божественная','непостижимая','невероятная','загадочная','таинственная',
+        'интересная','пленительная','незабываемая','не похожая на других'
+    ];
+    var container = document.getElementById('finaleWords');
+    container.innerHTML = '';
+    words.forEach(function(w, i){
+        var span = document.createElement('span');
+        span.textContent = w;
+        container.appendChild(span);
+        setTimeout(function(){ span.classList.add('show'); }, i*80);
+    });
+    showScreen('finale');
+    setTimeout(function(){
+        var t = document.getElementById('finaleLove');
+        t.innerHTML = 'Ты изменила меня. Спасибо тебе, что ты есть —<br>тихая, хорошая, тёплая, настоящая.<br><br>Люблю тебя. И буду любить, пока ты позволяешь...<br>и даже дольше. ❤️';
+        t.classList.add('show');
+    }, words.length*80+700);
+    setTimeout(function(){
+        document.querySelector('.secret-rose-container').classList.add('show');
+    }, words.length*80+2200);
+}
+
+// ============ СЕКРЕТНАЯ РОЗА ============
+document.getElementById('secretRose').addEventListener('click', function(){
+    hideScreen('finale');
+    setTimeout(function(){
+        var sec = document.getElementById('secretMessage');
+        showScreen('secretMessage');
+        sec.querySelectorAll('.message-text').forEach(function(m, i){
+            setTimeout(function(){ m.classList.add('show'); }, i*900);
+        });
+    }, 800);
+});
+document.getElementById('backFromSecret').addEventListener('click', function(){
+    hideScreen('secretMessage');
+    setTimeout(function(){ showScreen('finale'); }, 800);
+});
