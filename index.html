@@ -21,122 +21,185 @@
         <span class="music-icon">🎵</span>
     </div>
 
-    <!-- Пролог -->
+    <!-- ====== ПРОЛОГ ====== -->
     <div class="screen intro show" id="intro" style="opacity:1; pointer-events:all;">
         <div class="glass-panel">
             <div class="small-text">Для одного человека...</div>
             <h1>Для Любови</h1>
             <p>Этот маленький мир был создан только для тебя.</p>
-            <button id="start" style="padding:16px 48px; border-radius:40px; border:1px solid rgba(255,255,255,0.3); background:rgba(255,255,255,0.08); color:white; font-size:18px; cursor:pointer; backdrop-filter:blur(10px); margin-top:30px; transition:0.4s;">Начать ✨</button>
+            <button id="start" class="glow-btn">Начать ✨</button>
         </div>
     </div>
 
-    <!-- Фраза-мостик (скрыта) -->
-    <div class="screen bridge" id="bridge">
-        <div class="glass-panel">
-            <p class="bridge-text" id="bridgeText"></p>
-        </div>
-    </div>
-
-    <!-- Вопрос 1 -->
+    <!-- ====== ВОПРОС 1 ====== -->
     <div class="screen question-screen" id="q1">
         <div class="glass-panel">
-            <h2>Какая ты сегодня?</h2>
+            <h2>Когда ты одна, что тебе ближе всего?</h2>
             <p class="hint">Можно выбрать несколько</p>
             <div class="options" data-question="1">
-                <button class="option-btn">😊 Весёлая</button>
-                <button class="option-btn">🥺 Нежная</button>
-                <button class="option-btn">😌 Спокойная</button>
-                <button class="option-btn">😏 Загадочная</button>
-                <button class="option-btn">😈 Вредная</button>
-                <button class="option-btn">❤️ Влюблённая</button>
+                <button class="option-btn">🌙 Тишина ночи</button>
+                <button class="option-btn">☕ Тёплый уют</button>
+                <button class="option-btn">🎧 Музыка в наушниках</button>
+                <button class="option-btn">📖 Мир своих мыслей</button>
+                <button class="option-btn">🌧 Дождь за окном</button>
             </div>
             <button class="next-btn">Продолжить ✨</button>
         </div>
     </div>
 
-    <!-- Вопрос 2 -->
+    <!-- ====== СЛОВА 1 ====== -->
+    <div class="screen message-screen" id="msg1">
+        <div class="glass-panel">
+            <p class="message-text">Любовь моя. Я часто думаю о том, как ты там...</p>
+            <p class="message-text delay-1">Всё ли у тебя хорошо, не устала ли, не голодна ли, не грустно ли тебе.</p>
+            <p class="message-text delay-2">Я хочу знать, что ты в порядке и счастлива. Не чтобы контролировать, а чтобы быть спокойным.</p>
+            <p class="message-text delay-3">Чтобы если что-то не так — ты знала, что я рядом.</p>
+        </div>
+    </div>
+
+    <!-- ====== ВОПРОС 2 ====== -->
     <div class="screen question-screen" id="q2">
         <div class="glass-panel">
-            <h2>Что делает тебя счастливее?</h2>
+            <h2>Какой цветок — это ты?</h2>
             <p class="hint">Можно выбрать несколько</p>
             <div class="options" data-question="2">
-                <button class="option-btn">🌙 Ночь</button>
-                <button class="option-btn">🌹 Цветы</button>
-                <button class="option-btn">✨ Звёзды</button>
-                <button class="option-btn">🎵 Музыка</button>
-                <button class="option-btn">☕ Уют</button>
-                <button class="option-btn">🤍 Объятия</button>
+                <button class="option-btn">🥀 Чёрная роза</button>
+                <button class="option-btn">🌹 Красная роза</button>
+                <button class="option-btn">🌸 Белая роза</button>
+                <button class="option-btn">🪻 Фиолетовый ирис</button>
             </div>
             <button class="next-btn">Продолжить ✨</button>
         </div>
     </div>
 
-    <!-- Вопрос 3 -->
+    <!-- ====== СЛОВА 2 ====== -->
+    <div class="screen message-screen" id="msg2">
+        <div class="glass-panel">
+            <p class="message-text">Желаю, чтобы мы однажды проснулись и увидели друг друга.</p>
+            <p class="message-text delay-1">Ты будешь смотреть на меня, а я на тебя. И мы ничего не будем говорить —</p>
+            <p class="message-text delay-2">потому что всё уже понятно. Мы будем просто улыбаться,</p>
+            <p class="message-text delay-3">потому что у нас есть друг друг.</p>
+        </div>
+    </div>
+
+    <!-- ====== ВОПРОС 3 ====== -->
     <div class="screen question-screen" id="q3">
         <div class="glass-panel">
-            <h2>Какая ты?</h2>
+            <h2>Где бы ты хотела проснуться?</h2>
             <p class="hint">Можно выбрать несколько</p>
             <div class="options" data-question="3">
-                <button class="option-btn">💎 Элегантная</button>
-                <button class="option-btn">🌙 Загадочная</button>
-                <button class="option-btn">✨ Утончённая</button>
-                <button class="option-btn">🔥 Яркая</button>
-                <button class="option-btn">👑 Шикарная</button>
-                <button class="option-btn">💫 Неотразимая</button>
+                <button class="option-btn">🌲 В старом замке среди леса</button>
+                <button class="option-btn">🌌 На космической станции</button>
+                <button class="option-btn">🏰 В красивом городе ночью</button>
+                <button class="option-btn">🏡 В уютном доме с камином</button>
             </div>
             <button class="next-btn">Продолжить ✨</button>
         </div>
     </div>
 
-    <!-- Вопрос 4 -->
+    <!-- ====== СЛОВА 3 ====== -->
+    <div class="screen message-screen" id="msg3">
+        <div class="glass-panel">
+            <p class="message-text">Я хочу быть тем самым человеком, с которым ты не боишься быть собой.</p>
+            <p class="message-text delay-1">С которым ты будешь чувствовать себя комфортно, даже когда ты устала,</p>
+            <p class="message-text delay-2">даже когда злишься, даже когда тебе кажется, что ты слишком странная для этого мира —</p>
+            <p class="message-text delay-3">я буду рядом и буду смотреть на тебя с восхищением.</p>
+            <p class="message-text delay-4">И я буду любить тебя именно такой всегда.</p>
+        </div>
+    </div>
+
+    <!-- ====== ВОПРОС 4 ====== -->
     <div class="screen question-screen" id="q4">
         <div class="glass-panel">
-            <h2>Что тебе ближе?</h2>
+            <h2>Что ты ценишь в людях?</h2>
             <p class="hint">Можно выбрать несколько</p>
             <div class="options" data-question="4">
-                <button class="option-btn">🌸 Нежная</button>
-                <button class="option-btn">🫂 Заботливая</button>
-                <button class="option-btn">💜 Романтичная</button>
-                <button class="option-btn">🤗 Искренняя</button>
-                <button class="option-btn">🕊️ Верная</button>
-                <button class="option-btn">💖 Чувственная</button>
+                <button class="option-btn">❤️ Заботу</button>
+                <button class="option-btn">🛡 Надёжность</button>
+                <button class="option-btn">✨ Искренность</button>
+                <button class="option-btn">😂 Умение рассмешить</button>
+                <button class="option-btn">🌙 Понимание без слов</button>
             </div>
             <button class="next-btn">Продолжить ✨</button>
         </div>
     </div>
 
-    <!-- Вопрос 5 -->
+    <!-- ====== СЛОВА 4 ====== -->
+    <div class="screen message-screen" id="msg4">
+        <div class="glass-panel">
+            <p class="message-text">Я не знаю, что будет завтра. Но я точно знаю,</p>
+            <p class="message-text delay-1">что хочу, чтобы ты была в моём завтра.</p>
+            <p class="message-text delay-2">Хочу знать, что ты улыбаешься, что ты в безопасности,</p>
+            <p class="message-text delay-3">что ты чувствуешь себя нужной.</p>
+            <p class="message-text delay-4">Ты — та, ради кого я готов быть лучше.</p>
+        </div>
+    </div>
+
+    <!-- ====== ВОПРОС 5 ====== -->
     <div class="screen question-screen" id="q5">
         <div class="glass-panel">
-            <h2>Что делает тебя особенной?</h2>
+            <h2>Какая эстетика тебе ближе?</h2>
             <p class="hint">Можно выбрать несколько</p>
             <div class="options" data-question="5">
-                <button class="option-btn">🌟 Неповторимая</button>
-                <button class="option-btn">🌌 Неземная</button>
-                <button class="option-btn">🎭 Загадочная</button>
-                <button class="option-btn">💫 Волшебная</button>
-                <button class="option-btn">👼 Божественная</button>
-                <button class="option-btn">🔮 Непостижимая</button>
+                <button class="option-btn">🖤 Викторианская готика</button>
+                <button class="option-btn">🌙 Тёмный космос</button>
+                <button class="option-btn">🥀 Заброшенный замок</button>
+                <button class="option-btn">🕯 Тайная библиотека</button>
+                <button class="option-btn">🌧 Город под дождём</button>
             </div>
             <button class="next-btn">Продолжить ✨</button>
         </div>
     </div>
 
-    <!-- Тихая исповедь -->
+    <!-- ====== ВОПРОС 6 ====== -->
+    <div class="screen question-screen" id="q6">
+        <div class="glass-panel">
+            <h2>Какой момент для тебя самый ценный?</h2>
+            <p class="hint">Можно выбрать несколько</p>
+            <div class="options" data-question="6">
+                <button class="option-btn">🤍 Крепкие объятия</button>
+                <button class="option-btn">🌙 Молчание рядом</button>
+                <button class="option-btn">🌹 Маленькие сюрпризы</button>
+                <button class="option-btn">✨ Когда помнят мелочи</button>
+            </div>
+            <button class="next-btn">Продолжить ✨</button>
+        </div>
+    </div>
+
+    <!-- ====== ТИХАЯ ИСПОВЕДЬ ====== -->
     <div class="screen confession" id="confession">
         <div class="glass-panel">
             <div id="confessionLines"></div>
         </div>
     </div>
 
-    <!-- Финал со словами -->
+    <!-- ====== ФИНАЛ ====== -->
     <div class="screen finale" id="finale">
         <div class="glass-panel" id="finalePanel">
             <h2>Ты у меня самая...</h2>
             <div id="finaleWords"></div>
             <p class="finale-text" id="finaleLove"></p>
-            <button id="replayBtn" style="padding:14px 36px; border-radius:40px; border:1px solid rgba(255,255,255,0.3); background:rgba(255,255,255,0.08); color:white; font-size:16px; cursor:pointer; backdrop-filter:blur(10px); margin-top:24px;">Сыграть ещё раз? 🌙</button>
+            <div class="secret-rose-container">
+                <span class="secret-rose" id="secretRose">🌹</span>
+                <span class="secret-hint">Нажми на меня...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== СЕКРЕТНОЕ СООБЩЕНИЕ ====== -->
+    <div class="screen secret-message" id="secretMessage">
+        <div class="glass-panel">
+            <p class="message-text">Ты нашла меня! Очень этому рад, что ты добралась до конца.</p>
+            <p class="message-text delay-1">Я знаю, что ты чувствуешь по отношению ко мне и видишь,</p>
+            <p class="message-text delay-2">что я что-то делаю для тебя, но не так, как нужно.</p>
+            <p class="message-text delay-3">Но с тобой я становлюсь лучше с каждым днём,</p>
+            <p class="message-text delay-4">пусть на это и уходит много времени...</p>
+            <p class="message-text delay-5">Пусть я и не всегда умею показывать свою любовь так, как ты заслуживаешь.</p>
+            <p class="message-text delay-6">Но я хочу, чтобы ты знала: ты — моё самое драгоценное будущее.</p>
+            <p class="message-text delay-7">И я буду делать всё, чтобы мы были вместе.</p>
+            <p class="message-text delay-8">Не потому что должен, а потому что хочу.</p>
+            <p class="message-text delay-9">Потому что ты — та, ради кого я хочу просыпаться каждый день.</p>
+            <button id="backFromSecret" class="glow-btn">Вернуться обратно 🌙</button>
         </div>
     </div>
 
