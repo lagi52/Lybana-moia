@@ -43,28 +43,21 @@
     for(var i=0;i<8;i++) setTimeout(p, i*300);
 })();
 
-// ============ МУЗЫКАЛЬНЫЙ ПЛЕЕР (4 ТРЕКА) ============
+// ============ МУЗЫКАЛЬНЫЙ ПЛЕЕР (4 ТРЕКА, БЕЗ НАЗВАНИЙ) ============
 (function(){
     var tracks = [
-        {el: document.getElementById('song0'), name: 'Основная'},
-        {el: document.getElementById('song1'), name: 'Трек 2'},
-        {el: document.getElementById('song2'), name: 'Трек 3'},
-        {el: document.getElementById('song3'), name: 'Трек 4'}
+        document.getElementById('song0'),
+        document.getElementById('song1'),
+        document.getElementById('song2'),
+        document.getElementById('song3')
     ];
     var currentTrack = 0;
     var playing = false;
     var toggleBtn = document.getElementById('musicToggle');
     var nextBtn = document.getElementById('musicNext');
-    var info = document.getElementById('musicInfo');
-
-    tracks.forEach(function(t){ if(t.el) t.el.volume = 0.4; });
-
-    function updateInfo(){
-        info.textContent = tracks[currentTrack].name;
-    }
 
     function stopAll(){
-        tracks.forEach(function(t){ if(t.el){ t.el.pause(); t.el.currentTime = 0; } });
+        tracks.forEach(function(t){ if(t){ t.pause(); t.currentTime = 0; } });
     }
 
     toggleBtn.addEventListener('click', function(){
@@ -73,7 +66,7 @@
             toggleBtn.textContent = '🎵';
             playing = false;
         } else {
-            var t = tracks[currentTrack].el;
+            var t = tracks[currentTrack];
             if(t){
                 t.currentTime = 0;
                 t.play().catch(function(){});
@@ -86,17 +79,14 @@
     nextBtn.addEventListener('click', function(){
         stopAll();
         currentTrack = (currentTrack + 1) % tracks.length;
-        updateInfo();
         if(playing){
-            var t = tracks[currentTrack].el;
+            var t = tracks[currentTrack];
             if(t){
                 t.currentTime = 0;
                 t.play().catch(function(){});
             }
         }
     });
-
-    updateInfo();
 })();
 
 // ============ ДИАФРАГМА (ТОЛЬКО СТАРТ) ============
