@@ -15,7 +15,7 @@ body {
     user-select: none;
 }
 
-/* ============ МНОГОСЛОЙНЫЙ КОСМОС ============ */
+/* ============ КОСМОС ============ */
 
 .stars {
     position: absolute;
@@ -67,7 +67,7 @@ body {
     to { transform: translateY(-700px); }
 }
 
-/* ============ ПАДАЮЩИЕ ЛЕПЕСТКИ ============ */
+/* ============ ЛЕПЕСТКИ ============ */
 
 .petals {
     position: absolute;
@@ -87,23 +87,13 @@ body {
 }
 
 @keyframes fall {
-    0% {
-        transform: translateY(-50px) rotate(0deg) scale(1);
-        opacity: 0;
-    }
-    5% {
-        opacity: 0.9;
-    }
-    80% {
-        opacity: 0.6;
-    }
-    100% {
-        transform: translateY(105vh) rotate(720deg) scale(0.3);
-        opacity: 0;
-    }
+    0% { transform: translateY(-50px) rotate(0deg) scale(1); opacity: 0; }
+    5% { opacity: 0.9; }
+    80% { opacity: 0.6; }
+    100% { transform: translateY(105vh) rotate(720deg) scale(0.3); opacity: 0; }
 }
 
-/* ============ КНОПКА МУЗЫКИ ============ */
+/* ============ МУЗЫКА ============ */
 
 .music-toggle {
     position: fixed;
@@ -133,9 +123,7 @@ body {
     box-shadow: 0 0 15px rgba(180, 130, 255, 0.3);
 }
 
-.music-icon {
-    font-size: 20px;
-}
+.music-icon { font-size: 20px; }
 
 /* ============ СТЕКЛЯННАЯ ПАНЕЛЬ ============ */
 
@@ -144,12 +132,12 @@ body {
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 24px;
-    padding: 50px 40px;
+    padding: 45px 35px;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-                0 0 80px rgba(150, 100, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 80px rgba(150, 100, 255, 0.08);
     max-width: 600px;
-    width: 90%;
+    width: 92%;
+    transition: transform 0.4s ease;
 }
 
 /* ============ ПРОЛОГ ============ */
@@ -168,14 +156,8 @@ body {
 }
 
 @keyframes introAppear {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -35%);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
+    from { opacity: 0; transform: translate(-50%, -35%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 .small-text {
@@ -203,8 +185,8 @@ h1 {
 }
 
 button {
-    margin-top: 30px;
-    padding: 16px 48px;
+    margin-top: 25px;
+    padding: 16px 44px;
     border-radius: 40px;
     border: 1px solid rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.06);
@@ -223,7 +205,7 @@ button:hover {
     box-shadow: 0 0 30px rgba(160, 100, 255, 0.25);
 }
 
-/* ============ ЭКРАН ВОПРОСА ============ */
+/* ============ ЭКРАНЫ ВОПРОСОВ ============ */
 
 .question-screen {
     position: absolute;
@@ -236,7 +218,7 @@ button:hover {
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .question-screen.show {
@@ -246,59 +228,118 @@ button:hover {
 }
 
 .question-screen h2 {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 300;
-    margin-bottom: 35px;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, #ffffff, #d4b8ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
+.hint {
+    font-size: 14px !important;
+    color: #8888aa !important;
+    margin-bottom: 25px !important;
+}
+
 .options {
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 12px;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .option-btn {
-    padding: 14px 28px;
+    padding: 13px 24px;
     border-radius: 40px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.05);
     color: #e0d8f0;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     transition: all 0.35s ease;
     backdrop-filter: blur(8px);
     flex: 1 1 auto;
-    min-width: 140px;
-    max-width: 200px;
+    min-width: 130px;
+    max-width: 190px;
+    margin-top: 0 !important;
 }
 
 .option-btn:hover {
     background: rgba(200, 160, 255, 0.2);
     border-color: rgba(200, 160, 255, 0.5);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(120, 60, 220, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(120, 60, 220, 0.3);
 }
 
 .option-btn.selected {
     background: rgba(180, 130, 255, 0.35);
     border-color: rgba(200, 160, 255, 0.8);
-    box-shadow: 0 0 25px rgba(160, 100, 255, 0.4);
-    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(160, 100, 255, 0.4);
+    color: #fff;
+}
+
+.next-btn {
+    margin-top: 20px;
+    padding: 12px 40px;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: all 0.4s ease;
+}
+
+.next-btn.active {
+    opacity: 1;
+    pointer-events: all;
+    border-color: rgba(200, 160, 255, 0.6);
+}
+
+/* ============ СБОР ОТВЕТОВ И ФИНАЛ ============ */
+
+#summaryAnswers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.answer-tag {
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: rgba(180, 130, 255, 0.25);
+    border: 1px solid rgba(200, 160, 255, 0.4);
+    font-size: 14px;
+    color: #e0d0ff;
+    animation: tagPop 0.4s ease;
+}
+
+@keyframes tagPop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.summary-text, .finale-text {
+    font-size: 18px !important;
+    color: #c0c0d0 !important;
+    margin-top: 20px !important;
+}
+
+#finaleWords {
+    margin: 20px 0;
+    font-size: 16px;
+    line-height: 2;
+    color: #e0d0ff;
 }
 
 /* ============ АДАПТАЦИЯ ============ */
 
 @media (max-width: 600px) {
     h1 { font-size: 40px; }
-    .glass-panel p { font-size: 16px; }
-    .glass-panel { padding: 35px 25px; }
-    button { padding: 14px 36px; font-size: 16px; }
+    .glass-panel { padding: 30px 20px; }
     .question-screen h2 { font-size: 24px; }
-    .option-btn { padding: 12px 20px; font-size: 14px; min-width: 110px; }
+    .option-btn { padding: 11px 18px; font-size: 14px; min-width: 100px; max-width: 150px; }
     .small-text { font-size: 13px; letter-spacing: 3px; }
+    .next-btn { padding: 10px 30px; font-size: 15px; }
 }
