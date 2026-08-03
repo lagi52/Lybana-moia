@@ -43,12 +43,13 @@
     for(var i=0;i<8;i++) setTimeout(p, i*300);
 })();
 
-// ============ МУЗЫКАЛЬНЫЙ ПЛЕЕР (2 ТРЕКА) ============
+// ============ МУЗЫКАЛЬНЫЙ ПЛЕЕР (4 ТРЕКА) ============
 (function(){
-        var tracks = [
-        document.getElementById('song1'),
-        document.getElementById('song2'),
-        document.getElementById('song3')
+    var tracks = [
+        {el: document.getElementById('song0'), name: 'Основная'},
+        {el: document.getElementById('song1'), name: 'Трек 2'},
+        {el: document.getElementById('song2'), name: 'Трек 3'},
+        {el: document.getElementById('song3'), name: 'Трек 4'}
     ];
     var currentTrack = 0;
     var playing = false;
@@ -56,30 +57,42 @@
     var nextBtn = document.getElementById('musicNext');
     var info = document.getElementById('musicInfo');
 
-    tracks.forEach(function(t){ t.volume = 0.4; });
+    tracks.forEach(function(t){ if(t.el) t.el.volume = 0.4; });
 
     function updateInfo(){
-        info.textContent = 'Трек ' + (currentTrack + 1);
+        info.textContent = tracks[currentTrack].name;
+    }
+
+    function stopAll(){
+        tracks.forEach(function(t){ if(t.el){ t.el.pause(); t.el.currentTime = 0; } });
     }
 
     toggleBtn.addEventListener('click', function(){
         if(playing){
-            tracks[currentTrack].pause();
+            stopAll();
             toggleBtn.textContent = '🎵';
+            playing = false;
         } else {
-            tracks[currentTrack].play().catch(function(){});
+            var t = tracks[currentTrack].el;
+            if(t){
+                t.currentTime = 0;
+                t.play().catch(function(){});
+            }
             toggleBtn.textContent = '⏸';
+            playing = true;
         }
-        playing = !playing;
     });
 
     nextBtn.addEventListener('click', function(){
-        if(playing) tracks[currentTrack].pause();
+        stopAll();
         currentTrack = (currentTrack + 1) % tracks.length;
         updateInfo();
         if(playing){
-            tracks[currentTrack].currentTime = 0;
-            tracks[currentTrack].play().catch(function(){});
+            var t = tracks[currentTrack].el;
+            if(t){
+                t.currentTime = 0;
+                t.play().catch(function(){});
+            }
         }
     });
 
