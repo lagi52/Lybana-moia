@@ -61,19 +61,33 @@ document.querySelectorAll('.options').forEach(function(opt){
     });
 });
 
-// ============ СООБЩЕНИЯ ============
+// ============ СООБЩЕНИЯ (МЕДЛЕННО, СТРЕЛКА) ============
 function showMessages(msgId, nextId){
     var screen = document.getElementById(msgId);
     showScreen(msgId);
     var msgs = screen.querySelectorAll('.message-text');
-    var btn = screen.querySelector('.continue-btn');
+
+    // Удаляем старую стрелку если есть
+    var oldArrow = screen.querySelector('.continue-arrow');
+    if(oldArrow) oldArrow.remove();
+
+    // Создаём стрелку
+    var arrow = document.createElement('button');
+    arrow.className = 'continue-arrow';
+    arrow.innerHTML = '↓';
+    arrow.style.display = 'none';
+    screen.querySelector('.glass-panel').appendChild(arrow);
+
+    // Показываем текст медленно (каждые 2 секунды)
     msgs.forEach(function(m, i){
-        setTimeout(function(){ m.classList.add('show'); }, i*900);
+        setTimeout(function(){ m.classList.add('show'); }, i * 2000);
     });
-    var total = msgs.length * 900 + 400;
+
+    // Стрелка появляется через 2 секунды после последнего сообщения
+    var total = msgs.length * 2000 + 2000;
     setTimeout(function(){
-        btn.style.display = 'inline-block';
-        btn.onclick = function(){
+        arrow.style.display = 'inline-block';
+        arrow.onclick = function(){
             hideScreen(msgId);
             setTimeout(function(){ showScreen(nextId); }, 800);
         };
@@ -106,7 +120,7 @@ document.getElementById('next6').addEventListener('click', function(){
     hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 800);
 });
 
-// ============ ИСПОВЕДЬ ============
+// ============ ИСПОВЕДЬ (МЕДЛЕННО, СТРЕЛКА) ============
 function startConfession(){
     var lines = [
         'Я мог бы просто сказать, что люблю тебя...',
@@ -116,20 +130,31 @@ function startConfession(){
         'И вот что у неё получилось...'
     ];
     var container = document.getElementById('confessionLines');
-    var btn = document.getElementById('confessionCont');
     container.innerHTML = '';
-    btn.style.display = 'none';
+
+    // Удаляем старую стрелку
+    var oldArrow = document.getElementById('confession').querySelector('.continue-arrow');
+    if(oldArrow) oldArrow.remove();
+
+    // Создаём стрелку
+    var arrow = document.createElement('button');
+    arrow.className = 'continue-arrow';
+    arrow.innerHTML = '↓';
+    arrow.style.display = 'none';
+    document.getElementById('confession').querySelector('.glass-panel').appendChild(arrow);
+
     lines.forEach(function(line, i){
         var p = document.createElement('p');
         p.className = 'confession-line';
         p.textContent = line;
         container.appendChild(p);
-        setTimeout(function(){ p.classList.add('show'); }, i*1800);
+        setTimeout(function(){ p.classList.add('show'); }, i * 2200);
     });
-    var total = lines.length * 1800 + 400;
+
+    var total = lines.length * 2200 + 2000;
     setTimeout(function(){
-        btn.style.display = 'inline-block';
-        btn.onclick = function(){
+        arrow.style.display = 'inline-block';
+        arrow.onclick = function(){
             hideScreen('confession');
             setTimeout(function(){ showFinale(); }, 800);
         };
@@ -161,17 +186,17 @@ function showFinale(){
         var span = document.createElement('span');
         span.textContent = w;
         container.appendChild(span);
-        setTimeout(function(){ span.classList.add('show'); }, i*80);
+        setTimeout(function(){ span.classList.add('show'); }, i * 100);
     });
     showScreen('finale');
     setTimeout(function(){
         var t = document.getElementById('finaleLove');
         t.innerHTML = 'Ты изменила меня. Спасибо тебе, что ты есть —<br>тихая, хорошая, тёплая, настоящая.<br><br>Люблю тебя. И буду любить, пока ты позволяешь...<br>и даже дольше. ❤️';
         t.classList.add('show');
-    }, words.length*80+700);
+    }, words.length*100+800);
     setTimeout(function(){
         document.querySelector('.secret-rose-container').classList.add('show');
-    }, words.length*80+2200);
+    }, words.length*100+2500);
 }
 
 // ============ СЕКРЕТНАЯ РОЗА ============
@@ -181,7 +206,7 @@ document.getElementById('secretRose').addEventListener('click', function(){
         var sec = document.getElementById('secretMessage');
         showScreen('secretMessage');
         sec.querySelectorAll('.message-text').forEach(function(m, i){
-            setTimeout(function(){ m.classList.add('show'); }, i*900);
+            setTimeout(function(){ m.classList.add('show'); }, i * 1200);
         });
     }, 800);
 });
