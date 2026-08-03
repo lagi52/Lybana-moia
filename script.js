@@ -61,14 +61,38 @@ document.querySelectorAll('.options').forEach(function(opt){
     });
 });
 
-// ============ СООБЩЕНИЯ ============
+// ============ СООБЩЕНИЯ (СТРЕЛКА →) ============
 function showMessages(msgId, nextId){
     var screen = document.getElementById(msgId);
     showScreen(msgId);
     var panel = screen.querySelector('.glass-panel');
     var msgs = screen.querySelectorAll('.message-text');
-    var btn = panel.querySelector('.continue-btn');
-    if(btn) btn.style.display = 'none';
+
+    // Скрываем старую кнопку
+    var oldBtn = panel.querySelector('.continue-btn');
+    if(oldBtn) oldBtn.style.display = 'none';
+
+    // Удаляем старую стрелку
+    var oldArrow = panel.querySelector('.arrow-wrapper');
+    if(oldArrow) oldArrow.remove();
+
+    // Создаём стрелку
+    var arrowWrap = document.createElement('div');
+    arrowWrap.className = 'arrow-wrapper';
+    arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
+    var arrow = document.createElement('span');
+    arrow.className = 'continue-arrow';
+    arrow.innerHTML = '→';
+    arrow.style.cssText = 'display:none;';
+    arrowWrap.appendChild(arrow);
+    panel.appendChild(arrowWrap);
+
+    if(!document.getElementById('arrowStyle')){
+        var style = document.createElement('style');
+        style.id = 'arrowStyle';
+        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
+        document.head.appendChild(style);
+    }
 
     msgs.forEach(function(m, i){
         setTimeout(function(){ m.classList.add('show'); }, i * 2000);
@@ -76,13 +100,11 @@ function showMessages(msgId, nextId){
 
     var total = msgs.length * 2000 + 2000;
     setTimeout(function(){
-        if(btn){
-            btn.style.display = 'inline-block';
-            btn.onclick = function(){
-                hideScreen(msgId);
-                setTimeout(function(){ showScreen(nextId); }, 800);
-            };
-        }
+        arrow.style.display = 'inline-block';
+        arrow.onclick = function(){
+            hideScreen(msgId);
+            setTimeout(function(){ showScreen(nextId); }, 800);
+        };
     }, total);
 }
 
@@ -100,7 +122,7 @@ document.getElementById('next4').addEventListener('click', function(){ hideScree
 document.getElementById('next5').addEventListener('click', function(){ hideScreen('q5'); setTimeout(function(){ showScreen('q6'); }, 800); });
 document.getElementById('next6').addEventListener('click', function(){ hideScreen('q6'); setTimeout(function(){ showScreen('confession'); startConfession(); }, 800); });
 
-// ============ ИСПОВЕДЬ ============
+// ============ ИСПОВЕДЬ (СТРЕЛКА →) ============
 function startConfession(){
     var lines = [
         'Я мог бы просто сказать, что люблю тебя...',
@@ -110,9 +132,35 @@ function startConfession(){
         'И вот что у неё получилось...'
     ];
     var container = document.getElementById('confessionLines');
-    var btn = document.getElementById('confessionCont');
     container.innerHTML = '';
-    btn.style.display = 'none';
+    var panel = document.getElementById('confession').querySelector('.glass-panel');
+
+    // Скрываем старую кнопку
+    var oldBtn = document.getElementById('confessionCont');
+    if(oldBtn) oldBtn.style.display = 'none';
+
+    // Удаляем старую стрелку
+    var oldArrow = panel.querySelector('.arrow-wrapper');
+    if(oldArrow) oldArrow.remove();
+
+    // Создаём стрелку
+    var arrowWrap = document.createElement('div');
+    arrowWrap.className = 'arrow-wrapper';
+    arrowWrap.style.cssText = 'text-align:right; margin-top:12px;';
+    var arrow = document.createElement('span');
+    arrow.className = 'continue-arrow';
+    arrow.innerHTML = '→';
+    arrow.style.cssText = 'display:none;';
+    arrowWrap.appendChild(arrow);
+    panel.appendChild(arrowWrap);
+
+    if(!document.getElementById('arrowStyle')){
+        var style = document.createElement('style');
+        style.id = 'arrowStyle';
+        style.textContent = '@keyframes arrowPulse{0%,100%{opacity:0.4;text-shadow:0 0 4px rgba(180,130,255,0.2);}50%{opacity:1;text-shadow:0 0 12px rgba(180,130,255,0.6);}}';
+        document.head.appendChild(style);
+    }
+
     lines.forEach(function(line, i){
         var p = document.createElement('p');
         p.className = 'confession-line';
@@ -120,9 +168,10 @@ function startConfession(){
         container.appendChild(p);
         setTimeout(function(){ p.classList.add('show'); }, i * 2200);
     });
+
     setTimeout(function(){
-        btn.style.display = 'inline-block';
-        btn.onclick = function(){
+        arrow.style.display = 'inline-block';
+        arrow.onclick = function(){
             hideScreen('confession');
             setTimeout(function(){ showFinale(); }, 800);
         };
@@ -204,7 +253,6 @@ function buildConstellation(){
     var container = document.getElementById('constellationStars');
     container.innerHTML = '';
 
-    // Позиции для 10 звёзд
     var positions = [
         {top:'10%', left:'15%'}, {top:'8%', left:'75%'},
         {top:'28%', left:'8%'}, {top:'22%', left:'82%'},
@@ -227,7 +275,7 @@ function buildConstellation(){
         container.appendChild(star);
     });
 
-    // Полярная звезда (в центре)
+    // Полярная звезда
     var polar = document.createElement('div');
     polar.className = 'constellation-star';
     polar.innerHTML = '🌟';
@@ -253,12 +301,12 @@ function showWishCard(index, starEl){
 
     var card = document.createElement('div');
     card.className = 'glass-panel';
-    card.style.cssText = 'max-width:450px; animation:cardAppear 0.5s ease;';
+    card.style.cssText = 'max-width:450px; animation:cardAppear 0.5s ease; text-align:center;';
 
     if(index === 'polar'){
-        card.innerHTML = '<h2 style="font-size:20px; margin-bottom:16px;">🌟 Полярная звезда</h2><p style="font-size:17px; color:#e0d0f0; line-height:1.7;">Пока существует хотя бы одна звезда во Вселенной...<br><br>я буду желать тебе счастья.<br><br>❤️</p>';
+        card.innerHTML = '<p style="font-size:17px; color:#e0d0f0; line-height:1.7;">Пока существует хотя бы одна звезда во Вселенной...<br><br>я буду любить и желать тебе счастья.<br><br>❤️</p>';
     } else {
-        card.innerHTML = '<h2 style="font-size:20px; margin-bottom:16px;">⭐ Пожелание '+(index+1)+'</h2><p style="font-size:17px; color:#e0d0f0; line-height:1.7;">'+constellationWishes[index]+'</p>';
+        card.innerHTML = '<p style="font-size:17px; color:#e0d0f0; line-height:1.7;">'+constellationWishes[index]+'</p>';
     }
 
     var closeBtn = document.createElement('button');
