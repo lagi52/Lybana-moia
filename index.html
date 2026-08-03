@@ -34,15 +34,11 @@
     <!-- СВЕТЯЩИЕСЯ ЧАСТИЦЫ -->
     <div class="particles" id="particles"></div>
 
-    <!-- КНОПКА ЭМБИЕНТА -->
-    <div class="ambient-toggle" id="ambientToggle">
-        <span class="ambient-icon">🔇</span>
-        <span class="ambient-waves"></span>
-    </div>
-
-    <!-- КНОПКА МУЗЫКИ -->
-    <div class="music-toggle" id="musicToggle">
-        <span class="music-icon">🎵</span>
+    <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-btn" id="musicToggle">🎵</button>
+        <div class="music-info" id="musicInfo">Трек 1</div>
+        <button class="music-btn" id="musicNext">⏭</button>
     </div>
 
     <!-- ПЕРЕХОД-ДИАФРАГМА -->
@@ -197,7 +193,6 @@
     <div class="screen" id="confession">
         <div class="glass-panel">
             <div id="confessionLines"></div>
-            <button class="glow-btn" id="confessionCont" style="display:none;">Дальше ✨</button>
         </div>
     </div>
 
@@ -245,17 +240,18 @@
         <button id="backFromConstellation" class="glow-btn" style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); z-index:5;">Вернуться обратно 🌙</button>
     </div>
 
-    <!-- ПОРТАЛ В 18+ -->
+    <!-- ПОРТАЛ 18+ -->
     <div class="portal-18" id="portal18" title="18+">
         <span class="portal-icon">🖤</span>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="ambientSound" loop>
-        <source src="ambient.mp3" type="audio/mpeg">
-    </audio>
+    <!-- ПОРТАЛ ТИХОЕ МЕСТО -->
+    <div class="portal-quiet" id="portalQuiet" title="Тихое место">
+        <span class="portal-icon">🌧</span>
+    </div>
+
+    <audio id="song1" loop><source src="song1.mp3" type="audio/mpeg"></audio>
+    <audio id="song2" loop><source src="song2.mp3" type="audio/mpeg"></audio>
 
     <script src="script.js"></script>
 </body>
