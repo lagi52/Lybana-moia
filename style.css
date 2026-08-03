@@ -264,18 +264,39 @@ h2 {
     color: #c8c0e0 !important;
     opacity: 0;
     transform: translateY(10px);
-    transition: all 0.8s ease;
-    line-height: 1.6 !important;
-    margin-bottom: 8px !important;
+    transition: all 1.5s ease;
+    line-height: 1.7 !important;
+    margin-bottom: 10px !important;
 }
 .message-text.show {
     opacity: 1;
     transform: translateY(0);
 }
-.continue-btn {
+
+/* СТРЕЛКА ДАЛЬШЕ */
+.continue-arrow {
     display: none;
-    margin-top: 20px;
-    z-index: 5;
+    margin-top: 24px;
+    font-size: 28px;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    animation: arrowBounce 2s ease-in-out infinite, arrowGlow 3s ease-in-out infinite;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.continue-arrow:hover {
+    color: rgba(200, 160, 255, 0.9);
+}
+@keyframes arrowBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+}
+@keyframes arrowGlow {
+    0%, 100% { text-shadow: 0 0 4px rgba(180,130,255,0.2); }
+    50% { text-shadow: 0 0 14px rgba(180,130,255,0.6); }
 }
 
 /* ИСПОВЕДЬ */
@@ -284,7 +305,7 @@ h2 {
     color: #c0b8e0;
     margin: 10px 0;
     opacity: 0;
-    transition: opacity 1.2s ease;
+    transition: opacity 1.8s ease;
     line-height: 1.6;
 }
 .confession-line.show { opacity: 1; }
@@ -311,7 +332,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(5, 2, 15, 0.65);
+    background: rgba(3, 1, 10, 0.45);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -319,9 +340,9 @@ h2 {
     border-radius: 24px;
 }
 .finale-glass, .secret-glass {
-    background: rgba(10, 5, 25, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(8, 3, 20, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     max-height: 100%;
     overflow-y: auto;
@@ -338,7 +359,7 @@ h2 {
     margin: 1px 4px;
     opacity: 0;
     transform: translateY(10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 #finaleWords span.show {
     opacity: 1;
@@ -349,7 +370,7 @@ h2 {
     color: #c0c0d0 !important;
     margin-top: 14px !important;
     opacity: 0;
-    transition: opacity 1.5s ease;
+    transition: opacity 2s ease;
 }
 .finale-text.show { opacity: 1; }
 
@@ -413,6 +434,7 @@ h2 {
     .finale-art { border-radius: 18px; }
     .finale-overlay { border-radius: 18px; padding: 14px; }
     .secret-rose { font-size: 32px; }
+    .continue-arrow { font-size: 24px; margin-top: 20px; }
     .music-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
     .music-icon { font-size: 15px; }
 }
