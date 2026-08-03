@@ -19,14 +19,13 @@ body {
     touch-action: manipulation;
 }
 
-/* ============ ШРИФТЫ ============ */
 h1, h2, .small-text, .confession-line {
     font-family: "Cormorant Garamond", serif;
     font-weight: 300;
     letter-spacing: 2px;
 }
 
-/* ============ ТУМАННОСТИ ============ */
+/* ТУМАННОСТИ */
 .nebula {
     position: fixed;
     top: -10%;
@@ -67,7 +66,6 @@ h1, h2, .small-text, .confession-line {
     75% { transform: scale(1.1) translate(-0.5%, -0.5%); opacity: 0.8; }
 }
 
-/* МЛЕЧНЫЙ ПУТЬ */
 .milky-way {
     position: fixed;
     top: -30%;
@@ -90,7 +88,6 @@ h1, h2, .small-text, .confession-line {
     50% { transform: rotate(-14deg) translate(1%, -1%); }
 }
 
-/* ЗВЁЗДЫ */
 .stars-layer {
     position: fixed;
     top: -5%;
@@ -172,7 +169,6 @@ h1, h2, .small-text, .confession-line {
     to { transform: translateY(-700px); }
 }
 
-/* МЕРЦАНИЕ */
 .twinkle {
     position: fixed;
     top: 0;
@@ -198,7 +194,6 @@ h1, h2, .small-text, .confession-line {
     50% { opacity: 1; transform: scale(1.8); box-shadow: 0 0 12px rgba(200,160,255,0.8); }
 }
 
-/* КОМЕТЫ */
 .comet {
     position: fixed;
     top: -5%;
@@ -232,13 +227,11 @@ h1, h2, .small-text, .confession-line {
     100% { transform: translate(-900px, 800px); opacity: 0; }
 }
 
-/* ============ СВЕТЯЩИЕСЯ ЧАСТИЦЫ ============ */
+/* ЧАСТИЦЫ */
 .particles {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     pointer-events: none;
     z-index: 3;
 }
@@ -256,87 +249,55 @@ h1, h2, .small-text, .confession-line {
     100% { transform: translateY(-110vh) translateX(40px) scale(0.2); opacity: 0; }
 }
 
-/* ============ ЭМБИЕНТ ============ */
-.ambient-toggle {
-    position: fixed;
-    bottom: 28px;
-    left: 28px;
-    z-index: 100;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.5s;
-}
-.ambient-toggle:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(200, 160, 255, 0.5);
-    box-shadow: 0 0 20px rgba(160, 100, 255, 0.3);
-}
-.ambient-toggle.playing {
-    border-color: rgba(180, 130, 255, 0.6);
-    box-shadow: 0 0 20px rgba(180, 130, 255, 0.4);
-}
-.ambient-icon { font-size: 20px; transition: 0.3s; }
-.ambient-waves {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 1px solid rgba(180, 130, 255, 0.3);
-    opacity: 0;
-    transition: 0.5s;
-}
-.ambient-toggle.playing .ambient-waves {
-    animation: ambientWave 1.5s ease-out infinite;
-}
-@keyframes ambientWave {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(1.8); opacity: 0; }
-}
-
-/* ============ КНОПКА МУЗЫКИ ============ */
-.music-toggle {
+/* МУЗЫКАЛЬНЫЙ ПЛЕЕР */
+.music-player {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 100;
-    width: 46px;
-    height: 46px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(10, 5, 20, 0.5);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 30px;
+    padding: 6px 14px;
+}
+.music-btn {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: 0.5s;
+    transition: 0.3s;
 }
-.music-toggle:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(200, 160, 255, 0.5);
-    box-shadow: 0 0 20px rgba(160, 100, 255, 0.3);
+.music-btn:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(200,160,255,0.5);
+    box-shadow: 0 0 15px rgba(160,100,255,0.3);
 }
-.music-toggle.playing {
-    border-color: rgba(180, 130, 255, 0.6);
-    box-shadow: 0 0 20px rgba(180, 130, 255, 0.4);
+.music-info {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    min-width: 50px;
+    text-align: center;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
 }
-.music-icon { font-size: 18px; transition: 0.3s; }
 
-/* ============ ДИАФРАГМА (ТОЛЬКО СТАРТ) ============ */
+/* ДИАФРАГМА */
 .iris-transition {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: 500;
     pointer-events: none;
     background: #010108;
@@ -347,23 +308,25 @@ h1, h2, .small-text, .confession-line {
     clip-path: circle(150% at 50% 50%);
 }
 
-/* ============ ПОРТАЛ 18+ ============ */
-.portal-18 {
+/* ПОРТАЛЫ */
+.portal-18, .portal-quiet {
     position: fixed;
     bottom: 28px;
-    right: 28px;
     z-index: 100;
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: rgba(20, 8, 8, 0.7);
     backdrop-filter: blur(12px);
-    border: 2px solid rgba(255, 100, 50, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: 0.5s;
+}
+.portal-18 {
+    right: 28px;
+    background: rgba(20, 8, 8, 0.7);
+    border: 2px solid rgba(255, 100, 50, 0.5);
     box-shadow: 0 0 15px rgba(255, 80, 30, 0.2);
 }
 .portal-18:hover {
@@ -371,15 +334,24 @@ h1, h2, .small-text, .confession-line {
     box-shadow: 0 0 30px rgba(255, 80, 30, 0.5);
     transform: scale(1.1);
 }
+.portal-quiet {
+    right: 90px;
+    background: rgba(10, 15, 25, 0.7);
+    border: 2px solid rgba(100, 150, 200, 0.5);
+    box-shadow: 0 0 15px rgba(80, 130, 200, 0.2);
+}
+.portal-quiet:hover {
+    border-color: rgba(120, 170, 220, 0.9);
+    box-shadow: 0 0 30px rgba(80, 130, 200, 0.5);
+    transform: scale(1.1);
+}
 .portal-icon { font-size: 18px; }
 
-/* ============ ЭКРАНЫ ============ */
+/* ЭКРАНЫ */
 .screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -396,7 +368,7 @@ h1, h2, .small-text, .confession-line {
     transform: scale(1);
 }
 
-/* ============ СТЕКЛЯННАЯ ПАНЕЛЬ ============ */
+/* СТЕКЛЯННАЯ ПАНЕЛЬ */
 .glass-panel {
     background: rgba(10, 5, 24, 0.5);
     backdrop-filter: blur(24px);
@@ -412,17 +384,15 @@ h1, h2, .small-text, .confession-line {
     overflow-y: auto;
     position: relative;
     z-index: 2;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
-/* ============ ТИПОГРАФИКА ============ */
+/* ТИПОГРАФИКА */
 .small-text { font-size: 14px; color: #b7a6ff; letter-spacing: 5px; margin-bottom: 20px; text-transform: uppercase; font-family: "Raleway", sans-serif; font-weight: 300; }
 h1 { font-size: 48px; font-weight: 300; background: linear-gradient(135deg, #ffffff 0%, #d4b8ff 50%, #b57bee 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; line-height: 1.2; }
 h2 { font-size: 26px; font-weight: 300; margin-bottom: 8px; background: linear-gradient(135deg, #ffffff, #d4b8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.3; }
 .glass-panel p { font-size: 16px; color: #b0b0c0; margin-bottom: 6px; line-height: 1.6; }
 .hint { font-size: 13px !important; color: #7777aa !important; margin-bottom: 20px !important; }
 
-/* КНОПКИ */
 .glow-btn {
     padding: 15px 44px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.22);
     background: rgba(255, 255, 255, 0.05); color: white; font-size: 16px;
@@ -442,7 +412,6 @@ h2 { font-size: 26px; font-weight: 300; margin-bottom: 8px; background: linear-g
 }
 .next-btn.active { opacity: 1; pointer-events: all; border-color: rgba(200, 160, 255, 0.6); box-shadow: 0 0 20px rgba(160, 100, 255, 0.25); }
 
-/* ОПЦИИ */
 .options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 8px; }
 .option-btn {
     padding: 11px 20px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.16);
@@ -454,21 +423,17 @@ h2 { font-size: 26px; font-weight: 300; margin-bottom: 8px; background: linear-g
 .option-btn:active { transform: scale(0.93); }
 .option-btn.selected { background: rgba(180, 130, 255, 0.3); border-color: rgba(200, 160, 255, 0.7); box-shadow: 0 0 18px rgba(160, 100, 255, 0.35); color: #fff; }
 
-/* СООБЩЕНИЯ */
 .message-text { font-size: 17px !important; color: #c8c0e0 !important; opacity: 0; transform: translateY(12px); transition: all 1.8s ease; line-height: 1.8 !important; margin-bottom: 12px !important; }
 .message-text.show { opacity: 1; transform: translateY(0); }
 
-/* СТРЕЛКА */
 .arrow-wrapper { text-align: right; margin-top: 16px; }
 .continue-arrow { display: inline-block; font-size: 28px; color: rgba(255,255,255,0.4); cursor: pointer; animation: arrowPulse 2.5s ease-in-out infinite; transition: color 0.3s; }
 .continue-arrow:hover { color: rgba(200,160,255,0.9); }
 @keyframes arrowPulse { 0%,100% { opacity:0.35; text-shadow:0 0 4px rgba(180,130,255,0.15); } 50% { opacity:1; text-shadow:0 0 14px rgba(180,130,255,0.6); } }
 
-/* ИСПОВЕДЬ */
 .confession-line { font-size: 20px; color: #c0b8e0; margin: 14px 0; opacity: 0; transition: opacity 2s ease; line-height: 1.7; }
 .confession-line.show { opacity: 1; }
 
-/* ФИНАЛ */
 .finale-art-container { position: relative; width: 100%; max-width: 550px; max-height: 85vh; border-radius: 24px; overflow: hidden; }
 .finale-art { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 24px; }
 .finale-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.16); display: flex; justify-content: center; align-items: center; padding: 18px; border-radius: 24px; }
@@ -479,7 +444,6 @@ h2 { font-size: 26px; font-weight: 300; margin-bottom: 8px; background: linear-g
 .finale-text { font-size: 16px !important; color: #c0c0d0 !important; margin-top: 16px !important; opacity: 0; transition: opacity 2.5s ease; }
 .finale-text.show { opacity: 1; }
 
-/* СЕКРЕТНАЯ РОЗА */
 .secret-rose-container { margin-top: 28px; display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; transition: opacity 2.5s ease; z-index: 5; }
 .secret-rose-container.show { opacity: 1; }
 .secret-rose { font-size: 42px; cursor: pointer; animation: rosePulse 3s ease-in-out infinite; transition: transform 0.4s ease; display: inline-block; z-index: 5; }
@@ -488,23 +452,19 @@ h2 { font-size: 26px; font-weight: 300; margin-bottom: 8px; background: linear-g
 .secret-hint { font-size: 13px !important; color: #9999bb !important; font-style: italic; animation: hintFade 3s ease-in-out infinite; }
 @keyframes hintFade { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
-/* СОЗВЕЗДИЕ */
 #constellationScreen { background: radial-gradient(ellipse at center, #0a0a1a 0%, #020208 100%); }
 #constellationStars { position: relative; width: 100%; height: 100%; max-width: 600px; max-height: 80vh; }
 .constellation-star { position: absolute; cursor: pointer; font-size: 28px; animation: starFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(255,255,200,0.6)); transition: transform 0.3s ease, filter 0.3s ease; z-index: 2; user-select: none; }
 .constellation-star:hover { transform: scale(1.3); filter: drop-shadow(0 0 18px rgba(255,215,0,0.9)); }
 @keyframes starFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-/* КАРТОЧКА ПОЖЕЛАНИЯ */
 .wish-card-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 200; display: flex; justify-content: center; align-items: center; padding: 20px; }
 @keyframes cardAppear { from { opacity:0; transform:scale(0.8); } to { opacity:1; transform:scale(1); } }
 
-/* СКРОЛЛ */
 .glass-panel::-webkit-scrollbar { width: 3px; }
 .glass-panel::-webkit-scrollbar-track { background: transparent; }
 .glass-panel::-webkit-scrollbar-thumb { background: rgba(180, 130, 255, 0.25); border-radius: 10px; }
 
-/* МОБИЛЬНАЯ */
 @media (max-width: 600px) {
     .glass-panel { padding: 26px 18px; border-radius: 18px; }
     h1 { font-size: 34px; }
@@ -521,9 +481,10 @@ h2 { font-size: 26px; font-weight: 300; margin-bottom: 8px; background: linear-g
     .finale-art { border-radius: 18px; }
     .finale-overlay { border-radius: 18px; padding: 14px; }
     .secret-rose { font-size: 36px; }
-    .ambient-toggle { bottom: 20px; left: 20px; width: 40px; height: 40px; }
-    .music-toggle { top: 14px; right: 14px; width: 40px; height: 40px; }
+    .music-player { top: 14px; right: 14px; padding: 5px 12px; }
+    .music-btn { width: 32px; height: 32px; font-size: 14px; }
     .portal-18 { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+    .portal-quiet { bottom: 20px; right: 72px; width: 40px; height: 40px; }
     .constellation-star { font-size: 24px; }
     .continue-arrow { font-size: 24px; }
 }
