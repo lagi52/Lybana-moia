@@ -273,30 +273,25 @@ h2 {
     transform: translateY(0);
 }
 
-/* СТРЕЛКА ДАЛЬШЕ */
+/* СТРЕЛКА */
+.arrow-wrapper {
+    text-align: right;
+    margin-top: 12px;
+}
 .continue-arrow {
-    display: none;
-    margin-top: 24px;
-    font-size: 28px;
+    display: inline-block;
+    font-size: 26px;
     color: rgba(255,255,255,0.5);
     cursor: pointer;
-    animation: arrowBounce 2s ease-in-out infinite, arrowGlow 3s ease-in-out infinite;
+    animation: arrowPulse 2s ease-in-out infinite;
     transition: color 0.3s;
-    background: none;
-    border: none;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
 }
 .continue-arrow:hover {
-    color: rgba(200, 160, 255, 0.9);
+    color: rgba(200,160,255,0.9);
 }
-@keyframes arrowBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(8px); }
-}
-@keyframes arrowGlow {
-    0%, 100% { text-shadow: 0 0 4px rgba(180,130,255,0.2); }
-    50% { text-shadow: 0 0 14px rgba(180,130,255,0.6); }
+@keyframes arrowPulse {
+    0%,100% { opacity:0.4; text-shadow:0 0 4px rgba(180,130,255,0.2); }
+    50% { opacity:1; text-shadow:0 0 12px rgba(180,130,255,0.6); }
 }
 
 /* ИСПОВЕДЬ */
@@ -332,7 +327,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(3, 1, 10, 0.45);
+    background: rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -340,9 +335,9 @@ h2 {
     border-radius: 24px;
 }
 .finale-glass, .secret-glass {
-    background: rgba(8, 3, 20, 0.5);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(8, 3, 20, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     max-height: 100%;
     overflow-y: auto;
@@ -412,6 +407,48 @@ h2 {
     50% { opacity: 1; }
 }
 
+/* СОЗВЕЗДИЕ НА ФОНЕ */
+.constellation-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+.constellation-bg-star {
+    position: absolute;
+    cursor: default;
+    pointer-events: none;
+    animation: starFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(255,255,200,0.5));
+    transition: all 0.5s ease;
+}
+@keyframes starFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* КАРТОЧКА ПОЖЕЛАНИЯ */
+.wish-card-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+@keyframes cardAppear {
+    from { opacity:0; transform:scale(0.8); }
+    to { opacity:1; transform:scale(1); }
+}
+
 /* СКРОЛЛ */
 .glass-panel::-webkit-scrollbar { width: 3px; }
 .glass-panel::-webkit-scrollbar-track { background: transparent; }
@@ -434,9 +471,10 @@ h2 {
     .finale-art { border-radius: 18px; }
     .finale-overlay { border-radius: 18px; padding: 14px; }
     .secret-rose { font-size: 32px; }
-    .continue-arrow { font-size: 24px; margin-top: 20px; }
+    .continue-arrow { font-size: 22px; }
     .music-toggle { top: 10px; right: 10px; width: 36px; height: 36px; }
     .music-icon { font-size: 15px; }
+    .constellation-bg-star { font-size: 22px !important; }
 }
 
 @media (max-width: 380px) {
