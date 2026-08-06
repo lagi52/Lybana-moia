@@ -50,6 +50,14 @@
             <div class="small-text">Для одного человека...</div>
             <h1>Для Любови</h1>
             <p>Этот маленький мир был создан только для тебя.</p>
+            
+            <!-- Живой счетчик дней -->
+            <div class="days-counter">
+                <span class="days-number" id="daysCount">0</span>
+                <span class="days-label">дней вместе</span>
+            </div>
+            <div class="since-date">с 17 мая</div>
+
             <button id="startBtn" class="glow-btn">Начать ✨</button>
         </div>
     </div>
@@ -256,5 +264,21 @@
     <audio id="song3" loop><source src="song3.mp3" type="audio/mpeg"></audio>
 
     <script src="script.js"></script>
+    <script>
+        // ============ ЖИВОЙ СЧЕТЧИК ДНЕЙ ============
+        (function(){
+            var startDate = new Date('2026-05-17');
+            var counter = document.getElementById('daysCount');
+            
+            function updateCounter(){
+                var now = new Date();
+                var diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+                counter.textContent = diff;
+            }
+            
+            updateCounter();
+            setInterval(updateCounter, 60000); // Обновляем каждую минуту
+        })();
+    </script>
 </body>
 </html>
